@@ -26,11 +26,11 @@ export class TestComponent implements OnInit {
   constructor(private covidService: CovidService ) { }
 
   ngOnInit(): void {
-    this.getAllData();
+    this.getAllDataCovid();
   }
 
-  getAllData(): void {
-    this.covidService.getAllData()
+  getAllDataCovid(): void {
+    this.covidService.getAllDataCovid()
     .subscribe(data => this.covidData = data);
   }
 
