@@ -11,6 +11,5 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     SharedModule
   ],
   exports: [TestComponent, HomePageComponent]
-
 })
 export class CovidBaseModule { }

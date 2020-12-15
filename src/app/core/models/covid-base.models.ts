@@ -34,5 +34,3 @@ export interface ICountryAddInfo {
   name: string;
   population: number;
 }
-
-
