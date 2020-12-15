@@ -33,8 +33,6 @@ export interface ICountryAddInfo {
   alpha2Code: string;
   name: string;
   population: number;
-
 }
-
 
 
