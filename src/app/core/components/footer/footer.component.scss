@@ -1,0 +1,35 @@
+$base-color:#FFFFFF;
+
+.footer_wrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer_list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.footer_item:first-child {
+    margin-left: 1em;
+}
+
+.footer_link {
+    color: $base-color;
+    text-decoration: none;
+}
+  
+.footer_item_divider {
+    border-right: 1px solid $base-color;
+    height: 0.75em;
+    margin: 0.4em 1em;
+}
+
+.footer__rsschool {
+    width: 4em;
+}
