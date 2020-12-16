@@ -1,11 +1,1 @@
-<mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="label" sticky="true">
-        <td mat-cell *matCellDef="let row">{{ row.label }}</td>
-    </ng-container>
-
-    <ng-container [matColumnDef]="'column' + i" *ngFor="let column of inputData; let i = index">
-        <td mat-cell *matCellDef="let row"> {{ row['column' + i] | number  }} </td>
-    </ng-container>
-
-    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
-</mat-table>
+<p>table-block works!</p>
