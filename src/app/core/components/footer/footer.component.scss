@@ -1,6 +1,26 @@
 $base-color:#FFFFFF;
+$screen-sm-min: 600px;
+
+@mixin gt-xs {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+ }
+
+.footer_toolbar {
+    min-height: 5em;
+
+    @include gt-xs {
+        min-height: 3em;
+    }
+}
+
+.footer_toolbar-row {
+    height: max-content;
+}
 
 .footer_wrapper {
+    flex: 1 1 auto;
     flex-wrap: wrap;
 }
 
@@ -8,6 +28,7 @@ $base-color:#FFFFFF;
     display: flex;
     flex-wrap: wrap;
     list-style: none;
+    padding-inline-start: 0;
 }
 
 .footer_item:first-child {
