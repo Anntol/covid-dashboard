@@ -1,1 +1,17 @@
-<p>table-block works!</p>
+<mat-table [dataSource]="dataSource">
+    <ng-container  matColumnDef="cases">
+        <mat-header-cell *matHeaderCellDef>Cases</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.cases }}</mat-cell>
+    </ng-container>
+    <ng-container  matColumnDef="deaths">
+        <mat-header-cell *matHeaderCellDef>Deaths</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.deaths }}</mat-cell>
+    </ng-container>
+    <ng-container  matColumnDef="recovered">
+        <mat-header-cell *matHeaderCellDef>Recovered</mat-header-cell>
+        <mat-cell *matCellDef="let data">{{ data.recovered }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+</mat-table>
