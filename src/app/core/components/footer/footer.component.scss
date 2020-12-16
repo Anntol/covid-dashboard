@@ -1,49 +1,38 @@
 $base-color:#FFFFFF;
-$screen-sm-min: 600px;
 
-@mixin gt-xs {
-    @media (min-width: #{$screen-sm-min}) {
-        @content;
-    }
- }
-
-.footer_toolbar {
-    min-height: 5em;
-
-    @include gt-xs {
-        min-height: 3em;
-    }
-}
-
-.footer_toolbar-row {
+.footer__toolbar-row {
     height: max-content;
 }
 
-.footer_wrapper {
+.footer__wrapper {
     flex: 1 1 auto;
     flex-wrap: wrap;
 }
 
-.footer_list {
+.footer__list {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
     padding-inline-start: 0;
 }
 
-.footer_item:first-child {
+.footer__listitem:first-child {
     margin-left: 1em;
 }
 
-.footer_link {
+.footer__link {
     color: $base-color;
     text-decoration: none;
 }
   
-.footer_item_divider {
+.footer__listitem-divider {
     border-right: 1px solid $base-color;
     height: 0.75em;
     margin: 0.4em 1em;
+}
+
+.footer__year {
+    margin: 0 0.5em;
 }
 
 .footer__rsschool {
