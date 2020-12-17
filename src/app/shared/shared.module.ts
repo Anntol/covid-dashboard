@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -21,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
+    MatTableModule,
   ],
   exports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
+    MatTableModule,
   ]
 })
 export class SharedModule { }
