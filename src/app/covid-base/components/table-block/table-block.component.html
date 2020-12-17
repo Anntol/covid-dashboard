@@ -1,17 +1,11 @@
 <mat-table [dataSource]="dataSource">
-    <ng-container  matColumnDef="cases">
-        <mat-header-cell *matHeaderCellDef>Cases</mat-header-cell>
-        <mat-cell *matCellDef="let data">{{ data.cases }}</mat-cell>
-    </ng-container>
-    <ng-container  matColumnDef="deaths">
-        <mat-header-cell *matHeaderCellDef>Deaths</mat-header-cell>
-        <mat-cell *matCellDef="let data">{{ data.deaths }}</mat-cell>
-    </ng-container>
-    <ng-container  matColumnDef="recovered">
-        <mat-header-cell *matHeaderCellDef>Recovered</mat-header-cell>
-        <mat-cell *matCellDef="let data">{{ data.recovered }}</mat-cell>
+    <ng-container matColumnDef="label" sticky="true">
+        <td mat-cell *matCellDef="let row">{{ row.label }}</td>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+    <ng-container [matColumnDef]="'column' + i" *ngFor="let column of inputData; let i = index">
+        <td mat-cell *matCellDef="let row"> {{ row['column' + i] }} </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
 </mat-table>
