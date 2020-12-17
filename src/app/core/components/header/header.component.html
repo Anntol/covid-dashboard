@@ -7,13 +7,9 @@
   <img src="../../../../assets/svg/JH-logo-white.svg" alt="JH_logo">
   <span class='title'>COVID-19 Dashboard</span>
   <span class="spacer"></span>
-  <button mat-icon-button 
-          matTooltip="Add to Best RSS apps! (Opens in new Tab)" 
-          color="basic" aria-label="icon button with a heart icon" 
-          (click)="onClick()">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="btn-icon" aria-label="icon-button with share icon">
-    <mat-icon>share</mat-icon>
+  <app-dialog-like></app-dialog-like>
+  <button mat-icon-button class="btn-icon" 
+          aria-label="icon-button with info icon">
+    <mat-icon>info</mat-icon>
   </button>
 </mat-toolbar> 

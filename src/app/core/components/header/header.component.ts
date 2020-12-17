@@ -12,8 +12,4 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick(): void {
-  window.open('https://docs.google.com/forms/d/e/1FAIpQLScGvcVIuXS0cYSoQBSis1maQ0sjovq4tDRVlSzqammRfHMtAw/viewform');
-  }
-
 }
