@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  min-height: 380px;
+}
+
+.table-container {
+  position: relative;
+  max-height: 380px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+}
+
+th {
+  font-size: .8rem;
+}
+
+.col-data {
+  color: red;
+  font-weight: 700;
+}
