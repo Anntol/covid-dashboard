@@ -16,6 +16,10 @@ export class CountriesTableComponent implements OnInit{
 
   constructor() {}
 
+  @Input() covidData!: ICountries[];
+  dataSource = new MatTableDataSource<ICountries>(this.covidData);
+  displayedColumns: string[] = ['Country', 'TotalConfirmed'];
+
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
   }
