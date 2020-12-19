@@ -11,6 +11,6 @@ import { CountriesTableComponent } from './components/countries-table/countries-
     CommonModule,
     SharedModule
   ],
-  exports: [TestComponent, HomePageComponent, CountriesTableComponent]
+  exports: [TestComponent, HomePageComponent]
 })
 export class CovidBaseModule { }
