@@ -1,1 +1,16 @@
-<p>countries-table works!</p>
+<div class="container mat-elevation-z8">
+  <div class="table-container">
+    <table  mat-table matTableExporter [dataSource]="covidData" class="table">
+      <ng-container matColumnDef="TotalConfirmed">
+        <th mat-header-cell *matHeaderCellDef> Total Cases </th>
+        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.TotalConfirmed | number }} </td>
+      </ng-container>
+      <ng-container matColumnDef="Country">
+        <th mat-header-cell *matHeaderCellDef> Country </th>
+        <td class="col-country" mat-cell *matCellDef="let el"> {{ el.Country }} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let el; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
