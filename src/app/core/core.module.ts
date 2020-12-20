@@ -5,16 +5,17 @@ import { SharedModule } from '../shared/shared.module';
 import { CovidService } from '../core/services/covid.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
 @NgModule({
-  declarations: [PageNotFoundComponent, FooterComponent],
+  declarations: [PageNotFoundComponent, FooterComponent, HeaderComponent],
   imports: [
     CommonModule,
     SharedModule
   ],
   providers: [CovidService],
-  exports: [PageNotFoundComponent, FooterComponent],
+  exports: [PageNotFoundComponent, FooterComponent, HeaderComponent],
 })
 export class CoreModule { }
