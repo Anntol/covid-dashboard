@@ -1,40 +1,43 @@
 export interface ICovid19 {
-  Message: string;
-  Global: IGlobal;
-  Countries: ICountries[];
-  Date: string;
+  Global: IGlobal,
+  Countries: ICountries[],
+  Historical: IHistorical,
 }
 
 export interface IGlobal {
-  NewConfirmed: number;
-  TotalConfirmed: number;
-  NewDeaths: number;
-  TotalDeaths: number;
-  NewRecovered: number;
-  TotalRecovered: number;
+  updated: number,
+  country: string,
+  population: number,
+  totalCases: number,
+  totalDeaths: number,
+  totalRecovered: number;
 }
 
 export interface ICountries {
-  Country: string;
-  CountryCode: string;
-  Slug: string;
-  NewConfirmed: number;
-  TotalConfirmed: number;
-  NewDeaths: number;
-  TotalDeaths: number;
-  NewRecovered: number;
-  TotalRecovered: number;
-  Date: string;
-  Premium: {};
+  updated: number,
+  country: string,
+  countryInfo: {
+    _id: number,
+    iso2: string,
+    iso3: string,
+    lat: number,
+    long: number,
+    flag: string
+  },
+  totalCases: number,
+  totalDeaths: number,
+  totalRecovered: number,
+  population: number,
 }
 
-export interface ICountryAddInfo {
-  flag: string;
-  alpha2Code: string;
-  name: string;
-  population: number;
-
+export interface IHistorical {
+  cases: IDayData;
+  deaths: IDayData;
+  recovered: IDayData;
 }
 
+export interface IDayData {
+  [propName: string]: number;
+}
 
 

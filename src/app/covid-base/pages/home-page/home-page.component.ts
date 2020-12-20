@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ICovid19, ICountryAddInfo } from '../../../core/models/covid-base.models';
+import { ICountries, ICovid19, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
 import { CovidService } from '../../../core/services/covid.service';
+
+interface IParams {
+  country: string,
+  index: string,
+}
 
 @Component({
   selector: 'app-home-page',
@@ -9,37 +14,24 @@ import { CovidService } from '../../../core/services/covid.service';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-  covidData: ICovid19 = {
-    Message: '',
-    Global: {
-      NewConfirmed: 0,
-      TotalConfirmed: 0,
-      NewDeaths: 0,
-      TotalDeaths: 0,
-      NewRecovered: 0,
-      TotalRecovered: 0
-    },
-    Countries: [],
-    Date: ''
-  };
-
-  countryAddInfo: ICountryAddInfo[] = [];
+  Countries!: ICountries[];
+  Global!: IGlobal;
+  Historical!: IHistorical;
 
   constructor(private covidService: CovidService ) { }
 
   ngOnInit(): void {
-    this.getAllDataCovid();
-    this.getDataCountries();
+    this.getAllDataCovid({country: 'all', index: ''});
   }
 
-  getAllDataCovid(): void {
-    this.covidService.getAllDataCovid()
-    .subscribe(data => this.covidData = data);
-  }
-
-  getDataCountries(): void {
-    this.covidService.getDataCountries()
-    .subscribe(data => this.countryAddInfo = data);
+  getAllDataCovid(params: IParams): void {
+    this.covidService.getAllDataCovidByParams(params.country)
+    .subscribe(data => {
+      this.Countries = data[1];
+      this.Global = data[0];
+      this.Historical = data[2];
+      console.log(this.Countries, this.Global, this.Historical);
+    });
   }
 
 }
