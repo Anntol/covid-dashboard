@@ -16,6 +16,7 @@ import { DialogInfoContentComponent } from './components/dialog-info/dialog-info
 @NgModule({
   declarations: [
     PageNotFoundComponent,
+    FooterComponent,
     HeaderComponent,
     DialogLikeComponent,
     DialogLikeContentComponent,
