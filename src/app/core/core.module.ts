@@ -7,16 +7,32 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HeaderComponent } from './components/header/header.component';
 import { DialogLikeComponent } from './components/dialog-like/dialog-like.component';
 import { DialogLikeContentComponent } from './components/dialog-like/dialog-like.component';
+import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
+import { DialogInfoContentComponent } from './components/dialog-info/dialog-info.component';
 
 
 
 @NgModule({
-  declarations: [PageNotFoundComponent, HeaderComponent, DialogLikeComponent, DialogLikeContentComponent],
+  declarations: [
+    PageNotFoundComponent,
+    HeaderComponent,
+    DialogLikeComponent,
+    DialogLikeContentComponent,
+    DialogInfoComponent,
+    DialogInfoContentComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule
   ],
   providers: [CovidService],
-  exports: [PageNotFoundComponent, HeaderComponent, DialogLikeComponent, DialogLikeContentComponent],
+  exports: [
+    PageNotFoundComponent,
+    HeaderComponent,
+    DialogLikeComponent,
+    DialogLikeContentComponent,
+    DialogInfoComponent,
+    DialogInfoContentComponent,
+  ],
 })
 export class CoreModule { }
