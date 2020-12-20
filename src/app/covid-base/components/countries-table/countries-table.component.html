@@ -1,13 +1,22 @@
+<mat-form-field>
+  <mat-label>Search...</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input>
+</mat-form-field>
+
 <div class="container mat-elevation-z8">
-  <div class="table-container">
-    <table  mat-table matTableExporter [dataSource]="covidData" class="table">
-      <ng-container matColumnDef="TotalConfirmed">
-        <th mat-header-cell *matHeaderCellDef> Total Cases </th>
-        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.TotalConfirmed | number }} </td>
-      </ng-container>
+  <div class="table-container">    
+    <table  mat-table 
+            [dataSource]="covidData" 
+            class="table" 
+            matSort
+            matSortDisableClear>
       <ng-container matColumnDef="Country">
-        <th mat-header-cell *matHeaderCellDef> Country </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
         <td class="col-country" mat-cell *matCellDef="let el"> {{ el.Country }} </td>
+      </ng-container>
+      <ng-container matColumnDef="TotalConfirmed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cases </th>
+        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.TotalConfirmed | number }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let el; columns: displayedColumns;"></tr>
