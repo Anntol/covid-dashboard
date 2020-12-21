@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Like this COVID-19 Dashboard?</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Recommend our work to Rolling Scopes School.</h3>
+  <p>Thank you!</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button
+          mat-dialog-close
+          (click)="onClickLater()">
+          Later
+  </button>
+  <button mat-button
+          cdkFocusInitial 
+          [mat-dialog-close]="true"
+          (click)="onClickLike()">
+          Love it!
+          <mat-icon class="icon-heart">favorite</mat-icon>
+  </button>
+</mat-dialog-actions>
