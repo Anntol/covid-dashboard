@@ -9,29 +9,11 @@ import { CovidService } from '../../../core/services/covid.service';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-  covidData: ICovid19 = {
-    Message: '',
-    Global: {
-      NewConfirmed: 0,
-      TotalConfirmed: 0,
-      NewDeaths: 0,
-      TotalDeaths: 0,
-      NewRecovered: 0,
-      TotalRecovered: 0
-    },
-    Countries: [],
-    Date: ''
-  };
 
   constructor(private covidService: CovidService ) { }
 
   ngOnInit(): void {
-    this.getAllDataCovid();
-  }
-
-  getAllDataCovid(): void {
-    this.covidService.getAllDataCovid()
-    .subscribe(data => this.covidData = data);
+  
   }
 
 }
