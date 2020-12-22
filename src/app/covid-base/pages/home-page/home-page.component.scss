@@ -1,46 +1,94 @@
-.flex-wrapper {
+$items-bg-color: rgba(51, 56, 51, 0.822);
+$base-bg-color: rgba(51, 56, 51, 0.705);
+$items-shadow: rgba(0, 90, 250, 0.05);
+$base-color:rgb(255, 255, 255);
+$base-primary:  rgb(197, 17, 98);
+
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-between;
+  height: calc(100vh - 150px);
+
+  background-color: $base-bg-color;
+  border-radius: 3px;
+  padding: 13px 10px 5px 10px;
+  width: calc(100vw - 20px);
   margin: 0 auto;
-  height: auto;
-  background-color: rgba(51, 56, 51, 0.363);
-}
-
-.flex-column-left {
-  width: calc(20% - 5px);
-  height: 100vh;
+  counter-reset: items;
   @media screen and (max-width: 959px) {
-    width: 100%;
-  }
-  .child-1 {
-    height: calc(10vh - 5px);
-  }
-  .child-2 {
-    height: calc(60vh - 5px);
+    width: calc(100vw - 20px);
+    height: max-content;
   }
 }
 
-.flex-column-center {
-  width: calc(45% - 5px);
-  height: 100vh;
-  @media screen and (max-width: 959px) {
-    width: 100%;
-  }
-  .child-4 {
-    height: calc(74vh - 5px);
-  }
-
+.item {
+  position: relative;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: $items-bg-color;
+  border: 1px solid $base-primary;
+  box-shadow: 0 2px 2px $items-shadow,
+    0 4px 4px $items-shadow,
+    0 8px 8px $items-shadow,
+    0 16px 16px $items-shadow;
+  color: $base-color;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
-.flex-column-right {
-  width: calc(30% - 5px);
-  height: 100vh;
+.item:nth-child(3n+1) {
+  order: 1;
+  width: 25%;
   @media screen and (max-width: 959px) {
-    width: 100%;
+    width: calc(100vw - 20px);
   }
-  .child-6 {
-    height: calc(45vh - 5px);
+}
+.item:nth-child(3n+2) {
+  order: 2;
+  width: 44%;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 20px);
   }
-  .child-7 {
-    height: calc(32vh - 5px);
+}
+.item:nth-child(3n)   {
+  order: 3;
+  width: 30%;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 20px);
   }
+}
+
+.container::before,
+.container::after {
+  content: "";
+  flex-basis: 90%;
+  width: 0;
+  order: 2;
+}
+
+.material-icons {
+  color: $items-bg-color;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.material-icons:hover {
+  color: $base-primary;
+  cursor: pointer;
+}
+
+.block__noVisible {
+  display: none;
+}
+
+.block__visible {
+  display: block;
+}
+
+.in-full {
+  width: calc(100vw - 20px);
+  height: calc(100vh - 90px);
 }
 
