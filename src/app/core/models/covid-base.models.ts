@@ -11,6 +11,9 @@ export interface IGlobal {
   cases: number,
   deaths: number,
   recovered: number;
+  todayCases: number,
+  todayDeaths: number,
+  todayRecovered: number;
 }
 
 export interface ICountries {
