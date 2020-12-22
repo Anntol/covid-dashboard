@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatTableDataSource } from '@angular/material/table';
 import { IGlobal } from 'src/app/core/models/covid-base.models';
 
@@ -24,19 +25,20 @@ export class TableBlockComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // only run when property "globalData" changed
-    if (changes['globalData'] && this.globalData) {
-      //console.log('gl!', this.globalData);
-      const globalData: ITableElement = {
-        cases: this.globalData.cases,
-        deaths: this.globalData.deaths,
-        recovered: this.globalData.recovered
-      };
-      this.inputData = [globalData];
-      //console.log(this.inputData);
+    if(this.globalData) {
+      if (changes['globalData'] || changes['dayToggle'] ) {
+        //console.log('gl!', this.globalData, this.dayToggle);
+        const globalData: ITableElement = {
+          cases: this.dayToggle ? this.globalData.todayCases : this.globalData.cases,
+          deaths: this.dayToggle ? this.globalData.todayDeaths : this.globalData.deaths,
+          recovered: this.dayToggle ? this.globalData.todayRecovered : this.globalData.recovered
+        };
+        this.inputData = [globalData];
+        //console.log(this.inputData);
 
-      this.transpose();
-      this.fillLabels();
+        this.transpose();
+        this.fillLabels();
+      }
     }
   } 
 
@@ -59,6 +61,12 @@ export class TableBlockComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.inputData.length; i++) {
       this.displayColumns.push('column' + i);
     }
+  }
+
+  @Input() dayToggle!: boolean;
+  @Output() dayToggleChange = new EventEmitter<boolean>();  
+  toggleDay(e: MatSlideToggleChange) {
+    this.dayToggleChange.emit(e.checked);
   }
 }
 

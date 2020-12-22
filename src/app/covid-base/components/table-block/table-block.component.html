@@ -11,8 +11,8 @@
 </mat-table>
 
 <div class="toggles-bar">
-    <mat-slide-toggle #daySlide color="primary">
-        <span>{{daySlide.checked ? 'Day' : 'Total'}}</span>
+    <mat-slide-toggle #daySlide color="primary" (change)="toggleDay($event)">
+        <span>{{daySlide.checked ? 'Today' : 'Total'}}</span>
     </mat-slide-toggle>
 
     <mat-slide-toggle #populationSlide color="primary">
