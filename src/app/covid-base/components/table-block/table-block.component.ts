@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICovid19 } from 'src/app/core/models/covid-base.models';
+import { IGlobal } from 'src/app/core/models/covid-base.models';
 
 @Component({
   selector: 'app-table-block',
@@ -16,7 +16,7 @@ export class TableBlockComponent implements OnInit, OnChanges {
   displayData: any[] = [];
   inputData: any[] = [];
   
-  @Input() covidData!: ICovid19;
+  @Input() globalData!: IGlobal;
 
   constructor() { }
 
@@ -24,14 +24,16 @@ export class TableBlockComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // only run when property "covidData" changed
-    if (changes['covidData']) {
+    // only run when property "globalData" changed
+    if (changes['globalData'] && this.globalData) {
+      //console.log('gl!', this.globalData);
       const globalData: ITableElement = {
-        cases: this.covidData.Global.TotalConfirmed,
-        deaths: this.covidData.Global.TotalDeaths,
-        recovered: this.covidData.Global.TotalRecovered
+        cases: this.globalData.cases,
+        deaths: this.globalData.deaths,
+        recovered: this.globalData.recovered
       };
       this.inputData = [globalData];
+      //console.log(this.inputData);
 
       this.transpose();
       this.fillLabels();
