@@ -6,4 +6,10 @@ td.mat-cell {
 td.mat-cell:nth-child(1) {
     font-weight: bold;
 }
+
+.toggles-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 1em 0;
+}
   
