@@ -1,30 +1,34 @@
-<div class="container">
-  <div class="flex-wrapper"
-    fxLayout="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="center"
-    fxLayoutGap = "5px">
-    <div class="flex-column-left"
-      fxLayout="column"
-      fxLayoutAlign="center"
-      fxLayoutGap = "5px">
-      <mat-card class="child-1">1. One</mat-card>
-      <mat-card class="child-2">2. Two</mat-card>
-      <mat-card class="child-3">3. Three</mat-card>
-    </div>
-    <div class="flex-column-center"
-      fxLayout="column"
-      fxLayoutAlign="center"
-      fxLayoutGap = "5px">
-      <mat-card class="child-4">4. One</mat-card>
-      <mat-card class="child-5">5. Two</mat-card>
-    </div>
-    <div class="flex-column-right"
-      fxLayout="column"
-      fxLayoutAlign="center"
-      fxLayoutGap = "5px">
-      <mat-card class="child-6">6. One</mat-card>
-      <mat-card class="child-7">7. Two</mat-card>
-    </div>
+<div class="container"  (click)="openFullScreen($event)">
+  <div id="1" class="item"
+      [ngClass] = "setBlockVisibility(1)"
+      style="height: 150px">Global
+    <span class="material-icons">zoom_out_map</span>
+  </div>
+  <div id="2" class="item"
+      [ngClass] = "setBlockVisibility(2)"
+     style="height: calc(100vh - 225px)">Map
+    <span class="material-icons">zoom_out_map</span>
+  </div>
+  <div id="3" class="item"
+      [ngClass] = "setBlockVisibility(3)"
+      style="height:  calc(50vh - 125px)">Table
+    <span class="material-icons">zoom_out_map</span>
+  </div>
+  <div id="4" class="item"
+      [ngClass] = "setBlockVisibility(4)"
+      style="height: calc(100vh - 325px)">List
+    <span class="material-icons">zoom_out_map</span>
+  </div>
+  <div id="5" class="item"
+      [ngClass] = "setBlockVisibility(5)"
+      style="height: 50px">Date
+  </div>
+  <div id="6" class="item"
+      [ngClass] = "setBlockVisibility(6)"
+      style="height: calc(50vh - 50px)">Chart
+    <span
+    class="material-icons"
+    >zoom_out_map</span>
   </div>
 </div>
+

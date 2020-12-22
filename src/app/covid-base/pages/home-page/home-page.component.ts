@@ -1,3 +1,4 @@
+import { ParsedEvent } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 import { ICountries, ICovid19, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
@@ -6,6 +7,11 @@ import { CovidService } from '../../../core/services/covid.service';
 interface IParams {
   country: string,
   index: string,
+}
+
+interface BlockVisible {
+  block__noVisible: boolean,
+  block__visible: boolean,
 }
 
 @Component({
@@ -17,8 +23,27 @@ export class HomePageComponent implements OnInit {
   Countries!: ICountries[];
   Global!: IGlobal;
   Historical!: IHistorical;
+  blockId!: number;
+  toggleBlock: boolean = false;
 
   constructor(private covidService: CovidService ) { }
+
+  openFullScreen(e: Event): void {
+    const target = e.target as HTMLElement;
+    if (target.tagName.toLowerCase() !== 'span') {
+      return;
+    }
+    this.toggleBlock = !this.toggleBlock;
+    const { id } = target.parentElement as HTMLElement;
+    this.blockId = Number(id);
+  }
+
+  setBlockVisibility(el: any): BlockVisible  {
+    return {
+      block__noVisible: (el !== this.blockId && this.toggleBlock),
+      block__visible: el == this.blockId,
+    }
+  }
 
   ngOnInit(): void {
     this.getAllDataCovid({country: 'all', index: ''});
