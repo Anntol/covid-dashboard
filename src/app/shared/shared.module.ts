@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSlideToggleModule
   ],
   exports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSlideToggleModule,
   ]
 })
 export class SharedModule { }
