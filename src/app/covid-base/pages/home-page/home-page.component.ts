@@ -1,4 +1,3 @@
-import { ParsedEvent } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 import { ICountries, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
@@ -10,8 +9,8 @@ interface IParams {
 }
 
 interface BlockVisible {
-  block__noVisible: boolean,
-  block__visible: boolean,
+  block__noVisible: boolean;
+  block__visible: boolean;
 }
 
 @Component({
@@ -24,7 +23,7 @@ export class HomePageComponent implements OnInit {
   Global!: IGlobal;
   Historical!: IHistorical;
   blockId!: number;
-  toggleBlock: boolean = false;
+  toggleBlock = false;
 
   dayToggle = false;
   populationToggle = false;
@@ -45,7 +44,38 @@ export class HomePageComponent implements OnInit {
     return {
       block__noVisible: (el !== this.blockId && this.toggleBlock),
       block__visible: el == this.blockId,
+    };
+  }
+
+  getSizeBlock(index: number): string | void {
+    let style;
+    if (this.toggleBlock) {
+      console.log(this.toggleBlock, style);
+      style = 'width: calc(100vw - 40px); height: calc(100vh - 144px)';
+    } else {
+    switch (index) {
+      case 1:
+        style = 'height: 150px';
+        break;
+      case 2:
+        style = 'height: calc(100vh - 225px)';
+        break;
+      case 3:
+        style = 'height: calc(50vh - 125px)';
+        break;
+      case 4:
+        style = 'height: calc(100vh - 325px)';
+        break;
+      case 5:
+        style = 'height: 50px';
+        break;
+      case 6:
+        style = 'height: calc(50vh - 50px)';
+        break;
     }
+    return style;
+  }
+    console.log(this.toggleBlock, style);
   }
 
   ngOnInit(): void {
