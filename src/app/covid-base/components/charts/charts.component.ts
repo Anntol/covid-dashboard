@@ -2,6 +2,7 @@ import {
   Component,
   OnChanges,
   SimpleChanges,
+  AfterViewInit,
   EventEmitter,
   Input,
   Output,
@@ -10,12 +11,13 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { ThemePalette } from '@angular/material/core';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
-import { ICovid19, IHistorical } from '../../../core/models/covid-base.models';
+import { IHistorical } from '../../../core/models/covid-base.models';
 
 interface IData {
   date: Date,
@@ -27,7 +29,11 @@ interface IData {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent {
+export class ChartsComponent implements AfterViewInit, OnChanges {
+  links = ['Cases', 'Deaths', 'Recovered'];
+  activeLink = this.links[0];
+  background: ThemePalette = undefined;
+
   @Input() chartsData!: IHistorical;
   @Input() indicatorCovid!: string;
   @Output() indicatorCovidChange = new EventEmitter<string>();
@@ -46,6 +52,10 @@ export class ChartsComponent {
         f();
       });
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    
   }
 
   ngAfterViewInit() {
