@@ -1,6 +1,10 @@
+tr.mat-row {
+    height: 20px;
+}
+
 td.mat-cell {
     width: 10em;    
-    padding: 1em 0;
+    padding: 0.5em 0;
 }
 
 td.mat-cell:nth-child(1) {
@@ -10,7 +14,7 @@ td.mat-cell:nth-child(1) {
 .toggles-bar {
     display: flex;
     justify-content: space-around;
-    padding: 1em 0;
+    padding: 0.5em 0;
 }
 
 .title {
