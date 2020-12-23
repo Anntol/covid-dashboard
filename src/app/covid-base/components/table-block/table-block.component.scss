@@ -4,20 +4,19 @@ tr.mat-row {
 
 td.mat-cell {
     width: 10em;    
-    padding: 0.5em 0;
+    padding: 0.35em 0;
 }
 
 td.mat-cell:nth-child(1) {
     font-weight: bold;
 }
 
-.toggles-bar {
-    display: flex;
-    justify-content: space-around;
-    padding: 0.5em 0;
+.mat-slide-toggle {
+    padding: 0.35em;
 }
 
 .title {
+    padding-right: 26px;
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
