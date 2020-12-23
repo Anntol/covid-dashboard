@@ -35,4 +35,5 @@ export class HomePageComponent implements OnInit {
   }
 
   dayToggle: boolean = false;
+  populationToggle: boolean = false;
 }
