@@ -31,7 +31,10 @@ tr.mat-header-row {
   font-size: 1rem;
   color: red;
   font-weight: 700;
+}
 
+.col-country:hover {
+  cursor: pointer;
 }
 
 .mat-header-cell {
@@ -47,11 +50,12 @@ th.mat-sort-header-sorted {
 
 img {
   width: 1.5rem;
-  margin-right: .9rem;
+  margin-right: .5rem;
 }
 
 .icon-search {
   margin-right: .5rem;
+  padding-left: 1rem;
 }
 
 .mat-icon.icon-keyboard,
@@ -64,8 +68,12 @@ img {
   right: 0;
 }
 
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 2rem;
+}
 
-th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type,
-.icon-search {
-  padding-left: 1rem;
+.mat-form-field {
+  width: 50%;
+  position: relative;
+  left: 25%;
 }

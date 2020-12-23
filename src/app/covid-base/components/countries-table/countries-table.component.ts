@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges, EventEmitter, Output} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ICountries } from 'src/app/core/models/covid-base.models';
@@ -13,6 +13,8 @@ export class CountriesTableComponent implements OnInit, OnChanges{
   displayedColumns = ['cases', 'flag', 'country'];
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   dataSource!: MatTableDataSource<ICountries>;
+  searchCountry = '';
+  @Output() countrySelected: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
@@ -21,12 +23,10 @@ export class CountriesTableComponent implements OnInit, OnChanges{
     setTimeout(() => this.dataSource.sort = this.sort);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
+  selectCountry(country: string): any {
+    this.countrySelected.emit(country);
   }
 }
+
