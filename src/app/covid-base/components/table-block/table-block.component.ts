@@ -16,6 +16,7 @@ export class TableBlockComponent implements OnInit, OnChanges {
   displayColumns: string[] = [];
   displayData: any[] = [];
   inputData: any[] = [];
+  title: string = '';
   
   @Input() globalData!: IGlobal;
 
@@ -43,6 +44,7 @@ export class TableBlockComponent implements OnInit, OnChanges {
 
         this.transpose();
         this.fillLabels();
+        this.getTitle();
       }
     }
   } 
@@ -66,6 +68,14 @@ export class TableBlockComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.inputData.length; i++) {
       this.displayColumns.push('column' + i);
     }
+  }
+
+  getTitle() {
+    const dayPart = this.dayToggle ? "Today" : "All";
+    const populationPart = this.populationToggle ? "per 100k population" : "";
+    const countryPart = "for world"; // TODO Country
+
+    this.title = `${dayPart} data ${populationPart} ${countryPart}`;
   }
 
   @Input() dayToggle!: boolean;
