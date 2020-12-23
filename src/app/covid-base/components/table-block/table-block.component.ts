@@ -26,12 +26,17 @@ export class TableBlockComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.globalData) {
-      if (changes['globalData'] || changes['dayToggle'] ) {
+      if (changes['globalData'] || changes['dayToggle'] || changes['populationToggle'] ) {
         //console.log('gl!', this.globalData, this.dayToggle);
+        const cases = this.dayToggle ? this.globalData.todayCases : this.globalData.cases;
+        const deaths = this.dayToggle ? this.globalData.todayDeaths : this.globalData.deaths;
+        const recovered = this.dayToggle ? this.globalData.todayRecovered : this.globalData.recovered;
+        const populationDivider = 100000;
+
         const globalData: ITableElement = {
-          cases: this.dayToggle ? this.globalData.todayCases : this.globalData.cases,
-          deaths: this.dayToggle ? this.globalData.todayDeaths : this.globalData.deaths,
-          recovered: this.dayToggle ? this.globalData.todayRecovered : this.globalData.recovered
+          cases: this.populationToggle ? cases / populationDivider : cases,
+          deaths: this.populationToggle ? deaths / populationDivider : deaths,
+          recovered: this.populationToggle ? recovered / populationDivider :recovered
         };
         this.inputData = [globalData];
         //console.log(this.inputData);
@@ -67,6 +72,12 @@ export class TableBlockComponent implements OnInit, OnChanges {
   @Output() dayToggleChange = new EventEmitter<boolean>();  
   toggleDay(e: MatSlideToggleChange) {
     this.dayToggleChange.emit(e.checked);
+  }
+
+  @Input() populationToggle!: boolean;
+  @Output() populationToggleChange = new EventEmitter<boolean>();  
+  togglePopulation(e: MatSlideToggleChange) {
+    this.populationToggleChange.emit(e.checked);
   }
 }
 

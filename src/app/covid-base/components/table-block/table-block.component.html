@@ -15,7 +15,7 @@
         <span>{{daySlide.checked ? 'Today' : 'Total'}}</span>
     </mat-slide-toggle>
 
-    <mat-slide-toggle #populationSlide color="primary">
+    <mat-slide-toggle #populationSlide color="primary" (change)="togglePopulation($event)">
         <span>{{populationSlide.checked ? 'Per 100k population' : 'Absolute'}}</span>
     </mat-slide-toggle>
 </div>
