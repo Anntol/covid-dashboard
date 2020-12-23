@@ -1,0 +1,34 @@
+<mat-form-field>
+  <mat-label>
+    <mat-icon class="icon-search">search</mat-icon>
+      Search Country...
+    </mat-label>
+  <input matInput (keyup)="applyFilter($event)">  
+</mat-form-field>
+
+<div class="container mat-elevation-z8">
+  <div class="table-container">    
+    <table  mat-table 
+            [dataSource]="Countries" 
+            class="table" 
+            matSort
+            matSortActive="cases"
+            matSortDirection="desc"
+            matSortDisableClear>
+      <ng-container matColumnDef="cases">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cases </th>
+        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.cases | number }} </td>
+      </ng-container>
+      <ng-container matColumnDef="flag">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="col-flag" mat-cell *matCellDef="let el"><img [src]="el.countryInfo.flag"></td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+        <td class="col-country" mat-cell *matCellDef="let el"> {{ el.country }} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
