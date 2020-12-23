@@ -8,9 +8,12 @@ export interface IGlobal {
   updated: number,
   country: string,
   population: number,
-  totalCases: number,
-  totalDeaths: number,
-  totalRecovered: number;
+  cases: number,
+  deaths: number,
+  recovered: number;
+  todayCases: number,
+  todayDeaths: number,
+  todayRecovered: number;
 }
 
 export interface ICountries {
