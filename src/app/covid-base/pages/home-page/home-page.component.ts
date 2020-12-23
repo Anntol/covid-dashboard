@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ICountries, ICovid19, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
+import { ICountries, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
 import { CovidService } from '../../../core/services/covid.service';
 
 interface IParams {
-  country: string,
-  index: string,
+  country: string;
+  index: string;
 }
 
 @Component({
@@ -17,6 +17,9 @@ export class HomePageComponent implements OnInit {
   Countries!: ICountries[];
   Global!: IGlobal;
   Historical!: IHistorical;
+
+  dayToggle = false;
+  populationToggle = false;
 
   constructor(private covidService: CovidService ) { }
 
@@ -33,7 +36,4 @@ export class HomePageComponent implements OnInit {
       console.log(this.Countries, this.Global, this.Historical);
     });
   }
-
-  dayToggle: boolean = false;
-  populationToggle: boolean = false;
 }
