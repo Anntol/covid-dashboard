@@ -7,9 +7,16 @@ import { TestComponent } from './components/test/test.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TableBlockComponent } from './components/table-block/table-block.component';
 import { CountriesTableComponent } from './components/countries-table/countries-table.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
-  declarations: [TestComponent, HomePageComponent, TableBlockComponent, CountriesTableComponent],
+  declarations: [
+    TestComponent,
+    HomePageComponent,
+    TableBlockComponent,
+    CountriesTableComponent,
+    MapComponent
+  ],
 
   imports: [
     CommonModule,
@@ -17,6 +24,11 @@ import { CountriesTableComponent } from './components/countries-table/countries-
     MatTableModule,
     MatSlideToggleModule
   ],
-  exports: [TestComponent, HomePageComponent, CountriesTableComponent]
+  exports: [
+    TestComponent,
+    HomePageComponent,
+    CountriesTableComponent,
+    MapComponent
+  ]
 })
 export class CovidBaseModule { }
