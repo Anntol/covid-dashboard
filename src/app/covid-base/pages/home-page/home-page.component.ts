@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 
-import { ICountries, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
+import { ICountries, IDayData, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
 import { CovidService } from '../../../core/services/covid.service';
 
 interface IParams {
@@ -24,13 +24,15 @@ interface BorderStyle {
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  styleUrls: ['./home-page.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class HomePageComponent implements OnInit, OnChanges {
   Countries!: ICountries[];
   Global!: IGlobal;
   Historical!: IHistorical;
+  dataCarts!: IDayData;
   blockId!: number;
   toggleBlock = false;
 
@@ -140,5 +142,11 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.value = this.Global[keyValue as keys];
       this.dateUpdate = new Date (this.Global.updated);
     });
+    this.cdr.detectChanges();
   }
+
+  ngOnInit(): void {
+    this.getAllDataCovid(this.country);
+  }
+
 }

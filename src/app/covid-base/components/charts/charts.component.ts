@@ -1,4 +1,14 @@
-import { Component, OnChanges, SimpleChanges, AfterViewInit, Input, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  SimpleChanges,
+  EventEmitter,
+  Input,
+  Output,
+  Inject,
+  NgZone,
+  PLATFORM_ID
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as am4core from '@amcharts/amcharts4/core';
@@ -17,24 +27,18 @@ interface IData {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent implements OnChanges, AfterViewInit {
+export class ChartsComponent {
   @Input() chartsData!: IHistorical;
-  dataCharts!: IData[];
+  @Input() indicatorCovid!: string;
+  @Output() indicatorCovidChange = new EventEmitter<string>();
 
   private chart!: am4charts.XYChart;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.chartsData) {
-      if (changes['cases']) {
-        const { cases } = this.chartsData;
-      }
-      // this.dataCharts = cases.call();
-      // console.log(this.dataCharts);
-    }
-
-  }
+  // changeIndicator(e): void {
+  //   this.indicatorCovidChange.emit(e.checked);
+  // }
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -53,16 +57,17 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
 
       let data: any[] = [];
       console.log(this.chartsData);
-      // const days = Object.keys(this.Historical.cases);
+      // const days = Object.keys(this.chartsData);
       // days.forEach(item => {
-      //   const day =item.split('/');
+      //   console.log(item);
+      //   const day = item.split('/');
       //   const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
-      //   const valueDate = '';
-      //   data.push({ date: dayDate, value: valueDate});
+      //   // const valueDate = item;
+      //   data.push({ date: dayDate});
       // });
 
       chart.data = data;
-      console.log(data);
+      // console.log(data);
 
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.grid.template.location = 0;
