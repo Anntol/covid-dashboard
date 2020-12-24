@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit {
 
   openFullScreen(e: Event): void {
     const target = e.target as HTMLElement;
-    if (target.tagName.toLowerCase() !== 'span') {
+    if (!target.classList.contains('zoom-icon')) {
       return;
     }
     this.toggleBlock = !this.toggleBlock;
