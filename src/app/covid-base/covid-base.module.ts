@@ -6,14 +6,29 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TableBlockComponent } from './components/table-block/table-block.component';
 import { CountriesTableComponent } from './components/countries-table/countries-table.component';
 import { SearchCountryPipe } from './components/countries-table/search-country.pipe';
+import { SortPipe } from './components/countries-table/sort.pipe';
+
 
 @NgModule({
-  declarations: [TestComponent, HomePageComponent, TableBlockComponent, CountriesTableComponent, SearchCountryPipe],
+  declarations: [
+    TestComponent,
+    HomePageComponent,
+    TableBlockComponent,
+    CountriesTableComponent,
+    SearchCountryPipe,
+    SortPipe
+  ],
 
   imports: [
     CommonModule,
     SharedModule
   ],
-  exports: [TestComponent, HomePageComponent, CountriesTableComponent, SearchCountryPipe]
+  exports: [
+    TestComponent,
+    HomePageComponent,
+    CountriesTableComponent,
+    SearchCountryPipe,
+    SortPipe
+  ]
 })
 export class CovidBaseModule { }

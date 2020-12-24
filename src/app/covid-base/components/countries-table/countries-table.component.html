@@ -9,14 +9,10 @@
 <div class="container mat-elevation-z8">
   <div class="table-container">    
     <table  mat-table 
-            [dataSource]="Countries | searchCountryPipe:searchCountry" 
-            class="table" 
-            matSort
-            matSortActive="cases"
-            matSortDirection="desc"
-            matSortDisableClear>
+            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe:['cases', 'desc'] " 
+            class="table">
       <ng-container matColumnDef="cases">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cases </th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td class="col-data" mat-cell *matCellDef="let el"> {{ el.cases | number }} </td>
       </ng-container>
       <ng-container matColumnDef="flag">
@@ -24,7 +20,7 @@
         <td class="col-flag" mat-cell *matCellDef="let el"><img [src]="el.countryInfo.flag"></td>
       </ng-container>
       <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td class="col-country" mat-cell *matCellDef="let el" (click)="selectCountry(el.country)"> {{ el.country }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
