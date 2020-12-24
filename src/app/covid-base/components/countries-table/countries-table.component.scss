@@ -16,6 +16,11 @@ table {
 table,
 .mat-form-field {
   width: 100%;
+  @media screen and (max-width: 959px) {
+    width: 50%;
+    position: relative;
+    left: 25%;
+  }
 }
 
 th,
@@ -50,12 +55,12 @@ th.mat-sort-header-sorted {
 
 img {
   width: 1.5rem;
+  margin-left: .5rem;
   margin-right: .5rem;
 }
 
 .icon-search {
   margin-right: .5rem;
-  padding-left: 1rem;
 }
 
 .mat-icon.icon-keyboard,
@@ -69,7 +74,7 @@ img {
 }
 
 th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-  padding-left: 2rem;
+  padding-left: 1rem;
 }
 
 .mat-form-field {
