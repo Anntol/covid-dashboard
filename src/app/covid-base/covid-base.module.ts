@@ -14,7 +14,7 @@ import { MapComponent } from './components/map/map.component';
     HomePageComponent,
     TableBlockComponent,
     CountriesTableComponent,
-    SearchCountryPipeб
+    SearchCountryPipe,
     MapComponent
   ],
 
