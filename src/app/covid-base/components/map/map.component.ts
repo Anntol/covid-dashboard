@@ -2,7 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
-  AfterViewChecked,
+  AfterViewInit,
   SimpleChanges,
   Inject,
   NgZone,
@@ -29,10 +29,12 @@ interface IMapElement {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnChanges, AfterViewChecked {
+export class MapComponent implements OnChanges, AfterViewInit {
   @Input() countryData!: ICountries[];
   dataSource!: BehaviorSubject<ICountries[]>;
   inputData: IMapElement[] = [];
+
+  private chart!: am4maps.MapChart;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {}
 
@@ -59,7 +61,7 @@ export class MapComponent implements OnChanges, AfterViewChecked {
     }
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
@@ -73,18 +75,20 @@ export class MapComponent implements OnChanges, AfterViewChecked {
       const colors = { active: activeColor, confirmed: confirmedColor, recovered: recoveredColor, deaths: deathsColor };
 
       const chart = am4core.create('chartdiv', am4maps.MapChart);
+      chart.marginTop = 50;
 
       chart.height = am4core.percent(97);
       chart.zoomControl = new am4maps.ZoomControl();
       chart.zoomControl.align = 'right';
-      chart.zoomControl.marginRight = 15;
+      chart.zoomControl.marginRight = 5;
+      chart.zoomControl.marginTop = 5;
       chart.zoomControl.valign = 'bottom';
 
       chart.zoomEasing = am4core.ease.sinOut;
 
       chart.geodata = am4geodata_worldLow;
 
-      chart.projection = new am4maps.projections.Miller();
+      chart.projection = new am4maps.projections.Mercator();
 
       const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
 
@@ -121,7 +125,7 @@ export class MapComponent implements OnChanges, AfterViewChecked {
     })
 
     function animateBullet(circle: any) {
-      const animation = circle.animate([{ property: 'scale', from: 1, to: 5 }, { property: 'opacity', from: 1, to: 0 }], 1000, am4core.ease.circleOut);
+      const animation = circle.animate([{ property: 'scale', from: 1, to: 3 }, { property: 'opacity', from: 1, to: 0 }], 1000, am4core.ease.circleOut);
       animation.events.on('animationended', function(event: any){
         animateBullet(event.target.object);
       })
@@ -148,9 +152,9 @@ export class MapComponent implements OnChanges, AfterViewChecked {
 
   ngOnDestroy() {
     this.browserOnly(() => {
-      // if (this.chart) {
-      //   this.chart.dispose();
-      // }
+      if (this.chart) {
+        this.chart.dispose();
+      }
     });
   }
 
