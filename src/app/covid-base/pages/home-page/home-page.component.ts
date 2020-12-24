@@ -5,7 +5,9 @@ import { CovidService } from '../../../core/services/covid.service';
 
 interface IParams {
   country: string;
-  index: string;
+  indicatorCovid: string;
+  isDataOneDay: boolean;
+  isAbsolutPopulation: boolean;
 }
 
 interface BlockVisible {
@@ -18,6 +20,7 @@ interface BlockVisible {
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
+
 export class HomePageComponent implements OnInit {
   Countries!: ICountries[];
   Global!: IGlobal;
@@ -25,8 +28,14 @@ export class HomePageComponent implements OnInit {
   blockId!: number;
   toggleBlock = false;
 
+  title = 'title';
+  value = 0;
+  dateUpdate: any = '';
+
   dayToggle = false;
   populationToggle = false;
+  country = 'all';
+  indicatorCovid = 'cases';
 
   constructor(private covidService: CovidService ) { }
 
@@ -78,17 +87,27 @@ export class HomePageComponent implements OnInit {
     console.log(this.toggleBlock, style);
   }
 
-  ngOnInit(): void {
-    this.getAllDataCovid({country: 'all', index: ''});
+  params: IParams = {
+    country: this.country,
+    indicatorCovid: this.indicatorCovid,
+    isAbsolutPopulation: this.populationToggle,
+    isDataOneDay: this.dayToggle,
   }
 
-  getAllDataCovid(params: IParams): void {
-    this.covidService.getAllDataCovidByParams(params.country)
+  ngOnInit(): void {
+    this.getAllDataCovid(this.params.country);
+  }
+
+  getAllDataCovid(countryName: string): void {
+    this.covidService.getAllDataCovidByParams(countryName)
     .subscribe(data => {
       this.Countries = data[1];
       this.Global = data[0];
       this.Historical = data[2];
-      console.log(this.Countries, this.Global, this.Historical);
+      // console.log(this.Countries, this.Global, this.Historical);
+      this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
+      this.value = this.Global.cases;
+      this.dateUpdate = new Date (this.Global.updated);
     });
   }
 }

@@ -3,14 +3,17 @@
   <div id="1" class="item"
       [ngClass] = "setBlockVisibility(1)"
       style="height: 150px">
-      >Global
+      <div class="center-blok">
+        <p style="text-align: center; margin-top: 40px">{{ title }}</p>
+        <p style=" color: red; font-size: 32px; text-align: center">{{ value | number }}</p>
+      </div>
     <span class="material-icons">zoom_out_map</span>
   </div>
   <div id="2" class="item"
       [ngClass] = "setBlockVisibility(2)"
      style="height: calc(100vh - 225px)">
-    <span class="material-icons">zoom_out_map</span>
     <app-map [countryData]='Countries'></app-map>
+    <span class="material-icons">zoom_out_map</span>
   </div>
   <div id="3" class="item"
       [ngClass] = "setBlockVisibility(3)"
@@ -30,7 +33,8 @@
   </div>
   <div id="5" class="item"
       [ngClass] = "setBlockVisibility(5)"
-      style="height: 50px">Date
+      style="height: 50px">
+    <p style="text-align: center; margin-top: 10px">{{ dateUpdate | date:'fullDate' | uppercase }}</p>
   </div>
   <div id="6" class="item"
       [ngClass] = "setBlockVisibility(6)"
