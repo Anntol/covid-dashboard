@@ -7,7 +7,7 @@ import { TableBlockComponent } from './components/table-block/table-block.compon
 import { CountriesTableComponent } from './components/countries-table/countries-table.component';
 import { SearchCountryPipe } from './components/countries-table/search-country.pipe';
 import { SortPipe } from './components/countries-table/sort.pipe';
-
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -16,19 +16,22 @@ import { SortPipe } from './components/countries-table/sort.pipe';
     TableBlockComponent,
     CountriesTableComponent,
     SearchCountryPipe,
-    SortPipe
+    SortPipe,
+    MapComponent
   ],
 
   imports: [
     CommonModule,
     SharedModule
   ],
+
   exports: [
     TestComponent,
     HomePageComponent,
     CountriesTableComponent,
     SearchCountryPipe,
-    SortPipe
+    SortPipe,
+    MapComponent
   ]
 })
 export class CovidBaseModule { }

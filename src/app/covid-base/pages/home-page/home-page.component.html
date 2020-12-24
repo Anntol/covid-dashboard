@@ -6,15 +6,16 @@
   </div>
   <div id="2" class="item"
       [ngClass] = "setBlockVisibility(2)"
-     style="height: calc(100vh - 225px)">Map
+     style="height: calc(100vh - 225px)">
     <span class="material-icons">zoom_out_map</span>
+    <app-map [countryData]='Countries'></app-map>
   </div>
   <div id="3" class="item"
       [ngClass] = "setBlockVisibility(3)"
       style="height:  calc(50vh - 125px)">
     <span class="material-icons">zoom_out_map</span>
-    <app-table-block 
-      [globalData]='this.Global' 
+    <app-table-block
+      [globalData]='this.Global'
       [(dayToggle)]="this.dayToggle"
       [(populationToggle)]="this.populationToggle">
     </app-table-block>
