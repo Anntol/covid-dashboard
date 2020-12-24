@@ -2,14 +2,14 @@
   <mat-label>
     <mat-icon class="icon-search">search</mat-icon>
       Search Country...
-    </mat-label>
-  <input matInput (keyup)="applyFilter($event)">  
+  </mat-label>
+  <input matInput [(ngModel)]="searchCountry">  
 </mat-form-field>
 
 <div class="container mat-elevation-z8">
   <div class="table-container">    
     <table  mat-table 
-            [dataSource]="Countries" 
+            [dataSource]="Countries | searchCountryPipe:searchCountry" 
             class="table" 
             matSort
             matSortActive="cases"
@@ -25,7 +25,7 @@
       </ng-container>
       <ng-container matColumnDef="country">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
-        <td class="col-country" mat-cell *matCellDef="let el"> {{ el.country }} </td>
+        <td class="col-country" mat-cell *matCellDef="let el" (click)="selectCountry(el.country)"> {{ el.country }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
