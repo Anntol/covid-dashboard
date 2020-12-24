@@ -16,6 +16,11 @@ table {
 table,
 .mat-form-field {
   width: 100%;
+  @media screen and (max-width: 959px) {
+    width: 50%;
+    position: relative;
+    left: 25%;
+  }
 }
 
 th,
@@ -31,7 +36,10 @@ tr.mat-header-row {
   font-size: 1rem;
   color: red;
   font-weight: 700;
+}
 
+.col-country:hover {
+  cursor: pointer;
 }
 
 .mat-header-cell {
@@ -47,7 +55,8 @@ th.mat-sort-header-sorted {
 
 img {
   width: 1.5rem;
-  margin-right: .9rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
 }
 
 .icon-search {
@@ -64,8 +73,30 @@ img {
   right: 0;
 }
 
-
-th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type,
-.icon-search {
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
   padding-left: 1rem;
+}
+
+.mat-form-field {
+  width: 50%;
+  position: relative;
+  left: 25%;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkred; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: red; 
 }
