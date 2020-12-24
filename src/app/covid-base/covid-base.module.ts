@@ -6,6 +6,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TableBlockComponent } from './components/table-block/table-block.component';
 import { CountriesTableComponent } from './components/countries-table/countries-table.component';
 import { SearchCountryPipe } from './components/countries-table/search-country.pipe';
+import { SortPipe } from './components/countries-table/sort.pipe';
 import { MapComponent } from './components/map/map.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { MapComponent } from './components/map/map.component';
     TableBlockComponent,
     CountriesTableComponent,
     SearchCountryPipe,
+    SortPipe,
     MapComponent
   ],
 
@@ -28,6 +30,7 @@ import { MapComponent } from './components/map/map.component';
     HomePageComponent,
     CountriesTableComponent,
     SearchCountryPipe,
+    SortPipe,
     MapComponent
   ]
 })
