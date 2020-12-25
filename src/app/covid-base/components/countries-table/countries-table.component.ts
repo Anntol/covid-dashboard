@@ -23,13 +23,13 @@ export class CountriesTableComponent implements OnInit, OnChanges{
 
   ngOnInit(): void {}
 
-  onSortDirection(): any {
-    if (this.SortDirection === 'desc') {
-      this.SortDirection = 'asc';
-    } else {
-      this.SortDirection = 'desc';
-    }
-  }
+  // onSortDirection(): any {
+  //   if (this.SortDirection === 'desc') {
+  //     this.SortDirection = 'asc';
+  //   } else {
+  //     this.SortDirection = 'desc';
+  //   }
+  // }
 
   selectCountry(country: string): any {
     this.countrySelected.emit(country);
