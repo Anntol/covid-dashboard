@@ -55,7 +55,7 @@ export class HomePageComponent implements OnInit, OnChanges {
 
   openFullScreen(e: Event): void {
     const target = e.target as HTMLElement;
-    if (target.className.toLowerCase() !== 'material-icons full') {
+    if (!target.classList.contains('full')) {
       return;
     }
     this.toggleBlock = !this.toggleBlock;
