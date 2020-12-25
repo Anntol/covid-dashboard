@@ -17,6 +17,7 @@ export class TableBlockComponent implements OnChanges {
   displayData: any[] = [];
   inputData: any[] = [];
   title = '';
+  country = 'all';
 
   @Input() globalData!: IGlobal;
   @Input() dayToggle!: boolean;
@@ -40,6 +41,9 @@ export class TableBlockComponent implements OnChanges {
           recovered: this.populationToggle ? recovered / populationDivider : recovered
         };
         this.inputData = [globalData];
+        if (this.globalData.country) {
+          this.country = this.globalData.country;
+        }
 
         this.transpose();
         this.fillLabels();
@@ -72,7 +76,7 @@ export class TableBlockComponent implements OnChanges {
   getTitle(): void {
     const dayPart = this.dayToggle ? 'Today' : 'All';
     const populationPart = this.populationToggle ? 'per 100k population' : '';
-    const countryPart = 'for world'; // TODO Country
+    const countryPart = this.country === 'all' ? 'for world' : `for ${this.country}`;
 
     this.title = `${dayPart} data ${populationPart} ${countryPart}`;
   }
