@@ -32,7 +32,7 @@ export class CovidService {
         this.http.get<IGlobal>((country === 'all')?`${COVID_URL. SUMMARY}`:`${COVID_URL.BY_COUNTRY(country)}`).pipe(
           tap(response =>  this.Global = response)
         ),
-         this.http.get<ICountries[]>((country === 'all')?`${COVID_URL.COUNTRIES}`:`${COVID_URL.BY_COUNTRY(country)}`).pipe(
+         this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`).pipe(
           tap(response =>  this.Countries = response)
         ),
         this.http.get<IHistorical>(`${COVID_URL.HISTORICAL(country)}`).pipe(
