@@ -74,14 +74,14 @@ $base-primary:  rgb(197, 17, 98);
   align-items: center;
 }
 
-.material-icons {
+.full{
   color: $items-bg-color;
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
-.material-icons:hover {
+.full:hover {
   color: $base-primary;
   cursor: pointer;
 }
@@ -97,5 +97,28 @@ $base-primary:  rgb(197, 17, 98);
 .in-full {
   width: calc(100vw - 20px);
   height: calc(100vh - 90px);
+}
+
+
+mat-button-toggle-group {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+mat-button-toggle {
+  font-size: 14px;
+
+  &.text__red {
+    color: #f74e10;
+  }
+
+  &.text__blue {
+    color: #0794be;
+  }
+
+  &.text__green {
+    color: #20b120;
+  }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 
 import { ICountries, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
 import { CovidService } from '../../../core/services/covid.service';
@@ -15,13 +15,19 @@ interface BlockVisible {
   block__visible: boolean;
 }
 
+interface BorderStyle {
+  text__blue: boolean;
+  text__green: boolean;
+  text__red: boolean;
+}
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
 
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnChanges {
   Countries!: ICountries[];
   Global!: IGlobal;
   Historical!: IHistorical;
@@ -31,17 +37,25 @@ export class HomePageComponent implements OnInit {
   title = 'title';
   value = 0;
   dateUpdate: any = '';
+  links = ['Cases', 'Deaths', 'Recovered'];
 
-  dayToggle = false;
-  populationToggle = false;
-  country = 'all';
-  indicatorCovid = 'cases';
+  country: string = 'all';
+  @Input() indicatorCovid: string = 'cases';
+  dayToggle: boolean = false;
+  populationToggle: boolean = false;
 
-  constructor(private covidService: CovidService ) { }
+  constructor(private covidService: CovidService) {
+  }
+
+  public getIndicatorCovid(value: string): void {
+    this.params.indicatorCovid = value;
+    this.getAllDataCovid(this.params.country);
+    // console.log(this.params);
+  }
 
   openFullScreen(e: Event): void {
     const target = e.target as HTMLElement;
-    if (target.tagName.toLowerCase() !== 'span') {
+    if (!target.classList.contains('full')) {
       return;
     }
     this.toggleBlock = !this.toggleBlock;
@@ -84,18 +98,35 @@ export class HomePageComponent implements OnInit {
     }
     return style;
   }
-    console.log(this.toggleBlock, style);
+    // console.log(this.toggleBlock, style);
   }
 
   params: IParams = {
     country: this.country,
-    indicatorCovid: this.indicatorCovid,
+    indicatorCovid: this.indicatorCovid ,
     isAbsolutPopulation: this.populationToggle,
-    isDataOneDay: this.dayToggle,
+    isDataOneDay:this.dayToggle,
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getAllDataCovid(this.params.country);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (this.indicatorCovid) {
+      this.getIndicatorCovid(this.indicatorCovid);
+      console.log(this.params);
+      // for (const propName in changes) {
+      //   if (changes.hasOwnProperty(propName)) {
+      //     switch (propName) {
+      //       case 'indicatorCovid': {
+      //         console.log(propName);
+      //       }
+      //     }
+      //   }
+      // }
+    }
+    // this.countrySelected(this.country);
   }
 
   getAllDataCovid(countryName: string): void {
@@ -105,8 +136,14 @@ export class HomePageComponent implements OnInit {
       this.Global = data[0];
       this.Historical = data[2];
       // console.log(this.Countries, this.Global, this.Historical);
+      type keys = 'cases'|'deaths'|'recovered';
+      this.Countries.forEach(country => {
+        const keyValue = `${this.params.indicatorCovid}`;
+        country['value'] = country[keyValue as keys];
+      });
       this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
-      this.value = this.Global.cases;
+      const keyValue = `${this.params.indicatorCovid}`;
+      this.value = this.Global[keyValue as keys];
       this.dateUpdate = new Date (this.Global.updated);
     });
   }
