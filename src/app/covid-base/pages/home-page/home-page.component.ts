@@ -130,7 +130,6 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.Countries = data[1];
       this.Global = data[0];
       this.Historical = data[2];
-      console.log(this.Global, this.Historical)
       type keys = 'cases'|'deaths'|'recovered';
       this.Countries.forEach(country => {
         const keyValue = `${this.params.indicatorCovid}`;
