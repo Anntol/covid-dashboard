@@ -8,6 +8,7 @@ import { CountriesTableComponent } from './components/countries-table/countries-
 import { SearchCountryPipe } from './components/countries-table/search-country.pipe';
 import { SortPipe } from './components/countries-table/sort.pipe';
 import { MapComponent } from './components/map/map.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MapComponent } from './components/map/map.component';
 
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    MatButtonToggleModule,
   ],
 
   exports: [

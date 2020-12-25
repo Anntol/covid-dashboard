@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   exports: [
     CommonModule,
@@ -51,6 +53,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatInputModule,
     FormsModule,
     MatSlideToggleModule,
+    MatButtonModule,
   ]
 })
 export class SharedModule { }
