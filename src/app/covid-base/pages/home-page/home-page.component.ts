@@ -136,13 +136,14 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.Global = data[0];
       this.Historical = data[2];
       // console.log(this.Countries, this.Global, this.Historical);
+      type keys = 'cases'|'deaths'|'recovered';
       this.Countries.forEach(country => {
-        const temp: any = `${this.params.indicatorCovid}`;
-        country['value'] = country[temp];
+        const keyValue = `${this.params.indicatorCovid}`;
+        country['value'] = country[keyValue as keys];
       });
       this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
-      const temp: any = `${this.params.indicatorCovid}`;
-      this.value = this.Global[temp];
+      const keyValue = `${this.params.indicatorCovid}`;
+      this.value = this.Global[keyValue as keys];
       this.dateUpdate = new Date (this.Global.updated);
     });
   }

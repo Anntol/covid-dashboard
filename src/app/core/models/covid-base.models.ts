@@ -28,6 +28,9 @@ export interface ICountries {
     long: number;
     flag: string;
   };
+  cases: number;
+  deaths: number;
+  recovered: number;
   totalCases: number;
   totalDeaths: number;
   totalRecovered: number;
