@@ -3,17 +3,17 @@
     <mat-icon class="icon-search">search</mat-icon>
       Search Country...
   </mat-label>
-  <input matInput [(ngModel)]="searchCountry">  
+  <input matInput [(ngModel)]="searchCountry">
 </mat-form-field>
 
 <div class="container mat-elevation-z8">
-  <div class="table-container">    
-    <table  mat-table 
-            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe:['cases', 'desc'] " 
+  <div class="table-container">
+    <table  mat-table
+            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe:['cases', 'desc'] "
             class="table">
       <ng-container matColumnDef="cases">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.cases | number }} </td>
+        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.value | number }} </td>
       </ng-container>
       <ng-container matColumnDef="flag">
         <th mat-header-cell *matHeaderCellDef></th>

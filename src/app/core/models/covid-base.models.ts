@@ -14,6 +14,7 @@ export interface IGlobal {
   todayCases: number,
   todayDeaths: number,
   todayRecovered: number;
+  value: number;
 }
 
 export interface ICountries {
@@ -31,6 +32,7 @@ export interface ICountries {
   totalDeaths: number;
   totalRecovered: number;
   population: number;
+  value: number;
 }
 
 export interface IHistorical {
