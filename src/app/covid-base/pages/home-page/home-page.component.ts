@@ -39,7 +39,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   dateUpdate: any = '';
   links = ['Cases', 'Deaths', 'Recovered'];
 
-  country: string = 'all';
+  @Input() country: string = 'all';
   @Input() indicatorCovid: string = 'cases';
   dayToggle: boolean = false;
   populationToggle: boolean = false;
@@ -50,7 +50,11 @@ export class HomePageComponent implements OnInit, OnChanges {
   public getIndicatorCovid(value: string): void {
     this.params.indicatorCovid = value;
     this.getAllDataCovid(this.params.country);
-    // console.log(this.params);
+  }
+
+  public setCountry(countrySelected: string): void {
+    this.params.country = countrySelected;
+    this.getAllDataCovid(this.params.country);
   }
 
   openFullScreen(e: Event): void {
@@ -98,7 +102,6 @@ export class HomePageComponent implements OnInit, OnChanges {
     }
     return style;
   }
-    // console.log(this.toggleBlock, style);
   }
 
   params: IParams = {
@@ -115,18 +118,10 @@ export class HomePageComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (this.indicatorCovid) {
       this.getIndicatorCovid(this.indicatorCovid);
-      console.log(this.params);
-      // for (const propName in changes) {
-      //   if (changes.hasOwnProperty(propName)) {
-      //     switch (propName) {
-      //       case 'indicatorCovid': {
-      //         console.log(propName);
-      //       }
-      //     }
-      //   }
-      // }
     }
-    // this.countrySelected(this.country);
+    if (this.country) {
+      this.getIndicatorCovid(this.indicatorCovid);
+    }
   }
 
   getAllDataCovid(countryName: string): void {
@@ -135,7 +130,7 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.Countries = data[1];
       this.Global = data[0];
       this.Historical = data[2];
-      // console.log(this.Countries, this.Global, this.Historical);
+      console.log(this.Global, this.Historical)
       type keys = 'cases'|'deaths'|'recovered';
       this.Countries.forEach(country => {
         const keyValue = `${this.params.indicatorCovid}`;

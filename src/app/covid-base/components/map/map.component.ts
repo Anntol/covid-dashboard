@@ -16,6 +16,7 @@ import am4themes_dark from '@amcharts/amcharts4/themes/dark';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 import { ICountries } from 'src/app/core/models/covid-base.models';
+
 interface IMapElement {
   country: string;
   value: number;
@@ -31,15 +32,12 @@ interface IMapElement {
 })
 export class MapComponent implements OnChanges, AfterViewInit {
   @Input() countryData!: ICountries[];
-  dataSource!: BehaviorSubject<ICountries[]>;
+  dataAvailable = false;
   inputData: IMapElement[] = [];
 
   private chart!: am4maps.MapChart;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.dataSource = new BehaviorSubject(this.countryData);
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {
     const data: IMapElement[] = [];
     this.countryData?.forEach(item => {
       const country = item.country;
@@ -48,9 +46,30 @@ export class MapComponent implements OnChanges, AfterViewInit {
       const { lat } = item.countryInfo;
       const { long } = item.countryInfo;
       const color = 'colors.confirmed';
-      data.push({country: country, value: value, lat: lat, long: long, color: color })
+      data.push({country: country, value: value, lat: lat, long: long, color: color });
+      this.dataAvailable = true;
     })
-    console.log(data);
+    this.getDataForMap(data);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // const data: IMapElement[] = [];
+    // this.countryData?.forEach(item => {
+    //   const country = item.country;
+    //   const { totalCases } = item;
+    //   const value = totalCases;
+    //   const { lat } = item.countryInfo;
+    //   const { long } = item.countryInfo;
+    //   const color = 'colors.confirmed';
+    //   data.push({country: country, value: value, lat: lat, long: long, color: color });
+    //   this.dataAvailable = true;
+    // })
+    // this.getDataForMap(data);
+  }
+
+  getDataForMap(data:IMapElement[]): void {
+    this.inputData = data;
+    // console.log('input', this.inputData);
   }
 
   browserOnly(f: () => void) {
@@ -134,7 +153,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
     const colorSet = new am4core.ColorSet();
 
     imageSeries.data = this.inputData;
-    console.log(imageSeries.data);
+    // console.log(imageSeries.data);
 
     imageSeries.data = [
       {
