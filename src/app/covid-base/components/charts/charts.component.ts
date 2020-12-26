@@ -27,8 +27,8 @@ interface IData {
 })
 
 export class ChartsComponent implements OnChanges, AfterViewInit {
-  links = ['cases', 'deaths', 'recovered'];
-  activeLink = this.links[0];
+  selected = 'cases';
+  country = 'all';
 
   @Input() historicalData!: IHistData;
 
@@ -39,7 +39,8 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.historicalData) {
       if (changes[`historicalData`]) {
-        console.log('h->', this.historicalData);
+        this.selected = this.historicalData.valueName;
+        this.country = this.historicalData ? `${this.historicalData.country}` : 'ALL countries';
         this.ngAfterViewInit();
       }
     }
@@ -61,13 +62,15 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
       chart.paddingRight = 20;
 
       const data: any[] = [];
-      const temp = Object.keys(this.historicalData.value);
-      temp.forEach(keyValue => {
-        const day = keyValue.split('/');
-        const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
-        const valueDate = this.historicalData.value[keyValue];
-        data.push({ date: dayDate, value: valueDate });
-      });
+      if (this.historicalData.value) {
+        const temp = Object.keys(this.historicalData.value);
+        temp.forEach(keyValue => {
+          const day = keyValue.split('/');
+          const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
+          const valueDate = this.historicalData.value[keyValue];
+          data.push({ date: dayDate, value: valueDate });
+        });
+      }
       chart.data = data;
 
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -83,12 +86,14 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
       const { valueName } = this.historicalData;
       if (valueName === 'cases') {
         series.tooltipText = "Cases: [bold]{valueY}[/]";
+        series.columns.template.fill = am4core.color("red");
       }
       if (valueName === 'deaths') {
         series.tooltipText = "Deaths: [bold]{valueY}[/]";
       }
-      if (valueName === 'death') {
+      if (valueName === 'recovered') {
         series.tooltipText = "Recovered: [bold]{valueY}[/]";
+        series.columns.template.fill = am4core.color("green");
       }
 
       chart.cursor = new am4charts.XYCursor();
