@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICountries } from '../../../core/models/covid-base.models';
+import { ICountrData } from '../../../core/models/covid-base.models';
 
 @Pipe({
   name: 'searchCountryPipe'
 })
 export class SearchCountryPipe implements PipeTransform {
 
-  transform(countries: ICountries[], value: string = ''): ICountries[] {
+  transform(countries: ICountrData[], value: string = ''): ICountrData[] {
     if (!value || !countries) {
       return countries;
     }

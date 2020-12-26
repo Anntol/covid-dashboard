@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges, EventEmitter, Output} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICountries } from 'src/app/core/models/covid-base.models';
+import { ICountrData } from 'src/app/core/models/covid-base.models';
 
 @Component({
   selector: 'app-countries-table',
@@ -8,9 +8,9 @@ import { ICountries } from 'src/app/core/models/covid-base.models';
   styleUrls: ['./countries-table.component.scss']
 })
 export class CountriesTableComponent implements OnInit, OnChanges{
-  @Input() Countries!: ICountries[];
+  @Input() Countries!: ICountrData[];
   displayedColumns = ['cases', 'flag', 'country'];
-  dataSource!: MatTableDataSource<ICountries>;
+  dataSource!: MatTableDataSource<ICountrData>;
   searchCountry = '';
   SortDirection = 'desc';
   @Output() countrySelected: EventEmitter<string> = new EventEmitter();

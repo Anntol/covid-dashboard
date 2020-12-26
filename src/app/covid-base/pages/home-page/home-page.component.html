@@ -4,28 +4,28 @@
       [ngClass] = "setBlockVisibility(1)"
       style="height: 150px">
       <div class="center-blok">
-        <p style="text-align: center; margin-top: 40px">{{ title }}</p>
-        <p style=" color: red; font-size: 32px; text-align: center">{{ value | number }}</p>
+        <!-- <p style="text-align: center; margin-top: 40px">{{ title }}</p> -->
+        <!-- <p style=" color: red; font-size: 32px; text-align: center">{{ value | number }}</p> -->
       </div>
     <span class="material-icons full">zoom_out_map</span>
   </div>
   <div id="2" class="item"
       [ngClass] = "setBlockVisibility(2)"
      style="height: calc(100vh - 225px)">
-    <app-map [countryData]='this.Countries'></app-map>
+    <app-map [countryData] ='this.countriesData'></app-map>
     <span class="material-icons full">zoom_out_map</span>
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" #group="matButtonToggleGroup">
-      <mat-button-toggle value="cases" (click) = "getIndicatorCovid(group.value)">
+      <mat-button-toggle value="cases" (click) = "setIndicatorCovid(group.value)">
         <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
           fiber_manual_record
         </mat-icon>{{ links[0] }}
       </mat-button-toggle>
-      <mat-button-toggle value="deaths" (click) = "getIndicatorCovid(group.value)">
+      <mat-button-toggle value="deaths" (click) = "setIndicatorCovid(group.value)">
         <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
           fiber_manual_record
         </mat-icon>{{ links[1] }}
       </mat-button-toggle>
-      <mat-button-toggle value="recovered" (click) = "getIndicatorCovid(group.value)">
+      <mat-button-toggle value="recovered" (click) = "setIndicatorCovid(group.value)">
         <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
           fiber_manual_record
         </mat-icon>{{ links[2] }}
@@ -46,7 +46,7 @@
       [ngClass] = "setBlockVisibility(4)"
       style="height: calc(100vh - 325px)">
     <span class="material-icons full">zoom_out_map</span>
-    <app-countries-table [Countries]='Countries' (countrySelected)="setCountry($event)"></app-countries-table>
+    <app-countries-table [Countries]='this.countriesData' (countrySelected)="setCountry($event)"></app-countries-table>
   </div>
   <div id="5" class="item"
       [ngClass] = "setBlockVisibility(5)"
