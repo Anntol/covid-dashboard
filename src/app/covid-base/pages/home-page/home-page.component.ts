@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-import { ICountries, IDayData, IGlobal, IHistorical } from '../../../core/models/covid-base.models';
+import { ICountries, IDayData, IGlobal, IHistorical, IHistData } from '../../../core/models/covid-base.models';
 import { CovidService } from '../../../core/services/covid.service';
 
 interface IParams {
@@ -32,6 +32,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   Countries!: ICountries[];
   Global!: IGlobal;
   Historical!: IHistorical;
+  historicalData!: IHistData;
   dataCarts!: IDayData;
   blockId!: number;
   toggleBlock = false;
@@ -46,7 +47,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   dayToggle: boolean = false;
   populationToggle: boolean = false;
 
-  constructor(private covidService: CovidService) {
+  constructor(private covidService: CovidService, private cdr: ChangeDetectorRef) {
   }
 
   public getIndicatorCovid(value: string): void {
@@ -110,7 +111,7 @@ export class HomePageComponent implements OnInit, OnChanges {
     country: this.country,
     indicatorCovid: this.indicatorCovid ,
     isAbsolutPopulation: this.populationToggle,
-    isDataOneDay:this.dayToggle,
+    isDataOneDay: this.dayToggle,
   }
 
   public ngOnInit(): void {
@@ -122,7 +123,7 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.getIndicatorCovid(this.indicatorCovid);
     }
     if (this.country) {
-      this.getIndicatorCovid(this.indicatorCovid);
+      this.setCountry(this.country);
     }
   }
 
@@ -132,21 +133,28 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.Countries = data[1];
       this.Global = data[0];
       this.Historical = data[2];
+      console.log(this.params, this.Historical);
+      // countries
       type keys = 'cases'|'deaths'|'recovered';
       this.Countries.forEach(country => {
         const keyValue = `${this.params.indicatorCovid}`;
         country['value'] = country[keyValue as keys];
       });
+      // global
       this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
       const keyValue = `${this.params.indicatorCovid}`;
       this.value = this.Global[keyValue as keys];
       this.dateUpdate = new Date (this.Global.updated);
+      //charts
+      this.historicalData = {
+        country: this.params.country,
+        valueName: this.params.indicatorCovid,
+        value: this.Historical[keyValue as keys],
+      }
+      console.log(this.historicalData);
+
     });
     this.cdr.detectChanges();
-  }
-
-  ngOnInit(): void {
-    this.getAllDataCovid(this.country);
   }
 
 }

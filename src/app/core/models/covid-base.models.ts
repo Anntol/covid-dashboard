@@ -44,6 +44,11 @@ export interface IHistorical {
   recovered: IDayData;
 }
 
+export interface IHistData {
+  country: string;
+  valueName: string;
+  value: IDayData;
+}
 export interface IDayData {
   [propName: string]: number;
 }
