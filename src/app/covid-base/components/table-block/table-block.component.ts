@@ -22,6 +22,7 @@ export class TableBlockComponent implements OnChanges {
   @Input() globalData!: IGlobal;
   @Input() dayToggle!: boolean;
   @Input() populationToggle!: boolean;
+  @Input() indicatorCovid!: string;
   @Output() populationToggleChange = new EventEmitter<boolean>();
   @Output() dayToggleChange = new EventEmitter<boolean>();
 
@@ -79,6 +80,29 @@ export class TableBlockComponent implements OnChanges {
     const countryPart = this.country === 'all' ? 'for world' : `for ${this.country}`;
 
     this.title = `${dayPart} data ${populationPart} ${countryPart}`;
+  }
+
+  getHighlight(label: string) {
+    let color = 'white';
+    let fontSize = 1;
+    if (label.toLowerCase() === this.indicatorCovid) {
+      switch (this.indicatorCovid) {
+        case 'cases':
+          color = 'blue';
+          break;
+        case 'deaths':
+          color = 'red';
+          break;
+        case 'recovered':
+          color = 'green';
+          break;
+      }
+      fontSize = 1.2;
+    }
+    return {
+      'color': color,
+      'font-size.rem': fontSize
+    }
   }
 
   toggleDay(e: MatSlideToggleChange): void {

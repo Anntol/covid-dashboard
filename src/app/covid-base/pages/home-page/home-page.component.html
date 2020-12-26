@@ -1,14 +1,25 @@
 <div class="wrapper">
   <!-- style="width: calc(100vw - 40px); height: calc(100vh - 155px)" -->
   <div class="container" (click)="openFullScreen($event)">
-  <div id="1" class="item"
+  <!--<div id="1" class="item"
       [ngClass] = "setBlockVisibility(1)"
-      style="height: 120px">
+      style="height: 90px">
     <div class="center-blok">
-      <p style="text-align: center; margin-top: 25px">{{ title }}</p>
+      <p style="text-align: center; margin-top: 20px">{{ title }}</p>
       <p style=" color: red; font-size: 32px; text-align: center">{{ value | number }}</p>
     </div>
     <span class="material-icons full">zoom_out_map</span>
+  </div> -->
+  <div id="4" class="item"
+      [ngClass] = "setBlockVisibility(4)"
+      style="height: calc(70vh - 165px)">
+    <span class="material-icons full">zoom_out_map</span>
+    <app-table-block
+      [globalData]="this.Global"
+      [(dayToggle)]="this.dayToggle"
+      [(populationToggle)]="this.populationToggle"
+      [indicatorCovid]="this.params.indicatorCovid">
+    </app-table-block>
   </div>
   <div id="2" class="item"
       [ngClass] = "setBlockVisibility(2)"
@@ -40,16 +51,7 @@
     <app-countries-table [Countries]='Countries' (countrySelected)="setCountry($event)"></app-countries-table>
   </div>
 
-  <div id="4" class="item"
-      [ngClass] = "setBlockVisibility(4)"
-      style="height:  calc(70vh - 293px)">
-    <span class="material-icons full">zoom_out_map</span>
-    <app-table-block
-      [globalData]="this.Global"
-      [(dayToggle)]="this.dayToggle"
-      [(populationToggle)]="this.populationToggle">
-    </app-table-block>
-  </div>
+  
   </div>
     <div id="5" class="item charts"
       [ngClass] = "setBlockVisibility(5)"
@@ -57,5 +59,6 @@
       <!-- <app-charts [historicalData]='this.historicalData'></app-charts> -->
     <span class="material-icons full">zoom_out_map</span>
   </div>
+
 </div>
 

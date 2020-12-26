@@ -1,10 +1,15 @@
-tr.mat-row {
+/* tr.mat-row {
     height: 20px;
+} */
+
+.table-container {
+    margin: 1em 0;
 }
 
 td.mat-cell {
-    width: 10em;    
-    padding: 0.35em 0;
+    width: 10em;
+    vertical-align: middle;
+    font-size: 1rem;
 }
 
 td.mat-cell:nth-child(1) {
