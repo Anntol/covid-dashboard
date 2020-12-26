@@ -4,16 +4,16 @@ $items-shadow: rgba(0, 90, 250, 0.05);
 $base-color:rgb(255, 255, 255);
 $base-primary:  rgb(197, 17, 98);
 
+.wrapper {
+  background-color: $base-bg-color;
+  padding: 15px 15px 13px 15px;
+}
 .container {
   display: flex;
   flex-flow: column wrap;
   align-content: space-around;
-  height: calc(100vh - 144px);
-
-  background-color: $base-bg-color;
-  border-radius: 3px;
-  padding: 16px 15px 0px 15px;
-  width: calc(100vw - 30px);
+  height: calc(70vh - 156px);
+  width: calc(100vw - 51px);
   margin: 0 auto;
   counter-reset: items;
   @media screen and (max-width: 959px) {
@@ -33,29 +33,36 @@ $base-primary:  rgb(197, 17, 98);
     0 8px 8px $items-shadow,
     0 16px 16px $items-shadow;
   color: $base-color;
-  padding: 5px;
+  padding: 5px 5px 0 5px;
   box-sizing: border-box;
 }
 
 .item:nth-child(3n+1) {
   order: 1;
-  width: 25%;
+  width: 30%;
   @media screen and (max-width: 959px) {
     width: calc(100vw - 40px);
   }
 }
-.item:nth-child(3n+2) {
+.item:nth-child(2) {
   order: 2;
-  width: 45%;
+  width: 40%;
    @media screen and (max-width: 959px) {
     width: calc(100vw - 40px);
   }
 }
-.item:nth-child(3n)   {
+.item:nth-child(3)   {
   order: 3;
-  width: 28%;
+  width: 27%;
   @media screen and (max-width: 959px) {
     width: calc(100vw - 40px);
+  }
+}
+.charts {
+  width: 95%;
+  margin: 0 auto;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 30px);
   }
 }
 
