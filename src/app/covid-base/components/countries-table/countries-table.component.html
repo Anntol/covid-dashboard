@@ -9,7 +9,7 @@
 <div class="container mat-elevation-z8">
   <div class="table-container">
     <table  mat-table
-            [dataSource]="Countries | searchCountryPipe:searchCountry"
+            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe:'cases' "
             class="table">
       <ng-container matColumnDef="cases">
         <th mat-header-cell *matHeaderCellDef></th>
