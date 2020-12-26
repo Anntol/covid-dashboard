@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { ICovid19, ICountries, IGlobal, IHistorical } from '../models/covid-base.models';
+import { ICountries, IGlobal, IHistorical, ITimeLineGlobal } from '../models/covid-base.models';
 import { BASE_URL } from '../../shared/constants/constants';
 
 const COVID_URL = {
   SUMMARY: `${BASE_URL}all?yesterday=true`,
   COUNTRIES: `${BASE_URL}countries?yesterday=true`,
-  BY_COUNTRY: (country: string) => `${BASE_URL}countries/${country}?yesterday=true`,
-  HISTORICAL: (country: string) => `${BASE_URL}historical/${country}?lastdays=all`,
+  HISTORICAL: `${BASE_URL}historical?lastdays=all`,
+  HISTGLOBAL: `${BASE_URL}historical/all?lastdays=all`,
 }
 
 @Injectable({
@@ -19,7 +19,8 @@ const COVID_URL = {
 export class CovidService {
   Global!: IGlobal;
   Countries!: ICountries[];
-  Historical!: IHistorical;
+  Historical!: IHistorical[];
+  HistGlobal!: ITimeLineGlobal;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -27,26 +28,25 @@ export class CovidService {
 
   constructor(private http: HttpClient) {}
 
-    public getAllDataCovidByParams(country: string): Observable<any> {
+    public getAllDataCovidApi(): Observable<any> {
       const joined$ = forkJoin(
-        this.http.get<IGlobal>((country === 'all')?`${COVID_URL. SUMMARY}`:`${COVID_URL.BY_COUNTRY(country)}`).pipe(
+        this.http.get<IGlobal>(`${COVID_URL. SUMMARY}`).pipe(
           tap(response =>  this.Global = response)
         ),
-         this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`).pipe(
+        this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`).pipe(
           tap(response =>  this.Countries = response)
         ),
-        this.http.get<IHistorical>(`${COVID_URL.HISTORICAL(country)}`).pipe(
+        this.http.get<IHistorical[]>(`${COVID_URL.HISTORICAL}`).pipe(
           tap(response => this.Historical = response)
-        )
-      )
-      return joined$
-    }
-
-
-    private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
-        console.error(error);
-        return of(result as T);
-      };
+        ),
+        this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`).pipe(
+          tap(response => this.HistGlobal = response)
+        ),
+        // catchError((err: HttpErrorResponse) => {
+        //   console.error(err.status, err.message);
+        //   return of(joined$);
+        // })
+      );
+      return joined$;
     }
 }
