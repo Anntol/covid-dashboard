@@ -59,6 +59,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
       am4core.useTheme(am4themes_animated);
 
       let chart = am4core.create("chartsdiv", am4charts.XYChart);
+      am4core.options.autoDispose = true;
       chart.paddingRight = 20;
 
       const data: any[] = [];
