@@ -6,26 +6,18 @@ import { ICountries } from '../../../core/models/covid-base.models';
 })
 export class SortPipe implements PipeTransform {
 
-  transform(countries: ICountries[], args: any[]): ICountries[] {
-    const sortField = args[0];
-    const sortDirection = args[1];
-    let multiplier = 1;
-
-    if (sortDirection === 'desc') {
-      multiplier = -1;
+  transform(array: ICountries[], args: string): ICountries[] {
+    if (array !== undefined) {
+      array.sort((a: any, b: any) => {
+          if ( a[args] < b[args] ){
+              return 1;
+          } else if ( a[args] > b[args] ) {
+              return -1;
+          } else {
+              return 0;
+          }
+      });
     }
-
-    countries.sort((a: any, b: any) => {
-      if (a[sortField] < b[sortField]) {
-        return -1 * multiplier;
-        } else if (a[sortField] > b[sortField]) {
-          return 1 * multiplier;
-        } else {
-          return 0;
-        }
-      }
-    );
-    return countries;
+    return array;
   }
-
 }
