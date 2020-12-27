@@ -60,14 +60,11 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
-
       let chart = am4core.create("chartdiv", am4charts.XYChart);
       chart.paddingRight = 20;
 
       const data: any[] = [];
       if (this.isLoading){
-        console.log(this.historicalData.value);
-
         const temp = Object.keys(this.historicalData.value);
         temp.forEach(keyValue => {
           const day = keyValue.split('/');
@@ -84,25 +81,29 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
 
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.minWidth = 35;
+      valueAxis.rangeChangeDuration = 0;
 
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.dateX = "date";
       series.dataFields.valueY = "value";
       series.tooltipText = "{valueY.value}";
 
-      const { valueName } = this.historicalData;
-      if (valueName === 'cases') {
-        series.tooltipText = "Cases: [bold]{valueY}[/]";
-        series.columns.template.fill = am4core.color("red");
+      if (this.historicalData){
+        const { valueName } = this.historicalData;
+        if (valueName === 'cases') {
+          series.tooltipText = "Cases: [bold]{valueY}[/]";
+          series.columns.template.fill = am4core.color("red");
+        }
+        if (valueName === 'deaths') {
+          series.tooltipText = "Deaths: [bold]{valueY}[/]";
+        }
+        if (valueName === 'recovered') {
+          series.tooltipText = "Recovered: [bold]{valueY}[/]";
+          series.columns.template.fill = am4core.color("green");
+        }
+      } else {
+        series.columns.template.fill = am4core.color("yellow");
       }
-      if (valueName === 'deaths') {
-        series.tooltipText = "Deaths: [bold]{valueY}[/]";
-      }
-      if (valueName === 'recovered') {
-        series.tooltipText = "Recovered: [bold]{valueY}[/]";
-        series.columns.template.fill = am4core.color("green");
-      }
-
       chart.cursor = new am4charts.XYCursor();
 
       let scrollbarX = new am4charts.XYChartScrollbar();
@@ -117,6 +118,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.browserOnly(() => {
       if (this.chart) {
+        this.isLoading = false;
         this.chart.dispose();
       }
     });

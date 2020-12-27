@@ -205,6 +205,7 @@ export class HomePageComponent implements OnInit, OnChanges {
           value: value,
         });
       });
+      this.cdr.detectChanges();
       // console.log('1-',this.params, this.countriesData);
     }
 
@@ -229,6 +230,7 @@ export class HomePageComponent implements OnInit, OnChanges {
         valueName: valueName,
         value: value,
       };
+      this.cdr.detectChanges();
       // console.log('3-',this.params, this.historicalData);
     }
 
@@ -239,7 +241,6 @@ export class HomePageComponent implements OnInit, OnChanges {
         this.globalData = this.Global;
         this.globalData.updated = 0;
         this.globalData.country = params.country;
-        // console.log(globalData);
       } else {
         const tempGlobal: ICountries[] = this.Countries;
         const tempGlobalByCountry: NonNullable<ICountries[]> = tempGlobal.filter(item => item.country === params.country);
@@ -260,11 +261,11 @@ export class HomePageComponent implements OnInit, OnChanges {
       if (params.indicatorCovid) {
         this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
         const keyValue = `${params.indicatorCovid}`;
-        console.log(this.Global);
+        // console.log(this.Global);
         this.value = this.Global[keyValue as keys];
         this.globalData = this.globalData;
       }
-
+      this.cdr.detectChanges();
     }
 
     ngOnDestroy() {
