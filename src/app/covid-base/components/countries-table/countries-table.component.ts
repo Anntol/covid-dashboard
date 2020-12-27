@@ -40,7 +40,6 @@ export class CountriesTableComponent implements OnInit, OnChanges, AfterViewInit
 
   toggleKeyboard(): any{
     this.isShown = !this.isShown;
-    console.log(this.isShown);
   }
 
   ngOnInit(): void {}
