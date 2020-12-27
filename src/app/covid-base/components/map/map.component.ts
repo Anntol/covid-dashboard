@@ -3,6 +3,7 @@ import {
   Input,
   OnChanges,
   AfterViewInit,
+  OnDestroy,
   SimpleChanges,
   Inject,
   NgZone,
@@ -29,7 +30,7 @@ interface IMapElement {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnChanges, AfterViewInit {
+export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() countryData!: ICountrData[];
 
   inputData: IMapElement[] = [];
@@ -43,17 +44,10 @@ export class MapComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.countryData) {
       if (changes[`countryData`]) {
-        console.log(this.countryData);
-        // this.selected = this.historicalData.valueName;
-        // this.country = this.historicalData ? `${this.historicalData.country}` : 'all countries';
+        // console.log(this.countryData);
         this.ngAfterViewInit();
       }
     }
-  }
-
-  getDataForMap(data:IMapElement[]): void {
-    this.inputData = data;
-    // console.log('input', this.inputData);
   }
 
   browserOnly(f: () => void) {
@@ -68,6 +62,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
+      am4core.disposeAllCharts();
 
       const activeColor = am4core.color('#ff8726');
       const confirmedColor = am4core.color('#d21a1a');
@@ -111,7 +106,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
       imageSeries.mapImages.template.propertyFields.latitude = 'lat';
       imageSeries.mapImages.template.tooltipText = '{name} [bold]{value}';
-    
+
       const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
       circle.radius = 3;
       circle.propertyFields.fill = 'color';
@@ -133,25 +128,25 @@ export class MapComponent implements OnChanges, AfterViewInit {
     }
 
     const data: Partial<IMapElement[]> = [];
-      this.countryData?.forEach(item => {
-        const country = item.country;
-        const value = item.value;
-        const { lat } = item.countryInfo;
-        const { long } = item.countryInfo;
-        const valueName =  item.valueName;
-        type keys = 'cases'|'deaths'|'recovered';
-        let color = 'default';
-        if (valueName === 'cases') {
-          color =  String(colors['cases' as keys]);
-        }
-        if (valueName === 'deaths') {
-          color =  String(colors['deaths' as keys]);
-        }
-        if (valueName === 'recovered') {
-          color = String(colors['recovered' as keys]);
-        }
-        data.push({name: country, value: value, lat: lat, long: long, color: color });
-      })
+    this.countryData?.forEach(item => {
+      const country = item.country;
+      const value = item.value;
+      const { lat } = item.countryInfo;
+      const { long } = item.countryInfo;
+      const valueName =  item.valueName;
+      type keys = 'cases'|'deaths'|'recovered';
+      let color = 'default';
+      if (valueName === 'cases') {
+        color =  String(colors['cases' as keys]);
+      }
+      if (valueName === 'deaths') {
+        color =  String(colors['deaths' as keys]);
+      }
+      if (valueName === 'recovered') {
+        color = String(colors['recovered' as keys]);
+      }
+      data.push({name: country, value: value, lat: lat, long: long, color: color });
+    })
     imageSeries.data = data;
     polygonSeries.data = data;
     })

@@ -253,13 +253,18 @@ export class HomePageComponent implements OnInit, OnChanges {
           this.globalData.todayRecovered = Number(element.todayRecovered);
           this.globalData.recovered = Number(element.recovered);
         });
-        console.log(this.globalData);
+        // console.log(this.globalData);
       }
       // this.title = (params.country === 'all') ? 'Total'
       //              : `${params.country}` + ` ${params.indicatorCovid}`.toUpperCase();
-      this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
-      const keyValue = `${params.indicatorCovid}`;
-      this.value = this.Global[keyValue as keys];
+      if (params.indicatorCovid) {
+        this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
+        const keyValue = `${params.indicatorCovid}`;
+        console.log(this.Global);
+        this.value = this.Global[keyValue as keys];
+        this.globalData = this.globalData;
+      }
+
     }
 
     ngOnDestroy() {

@@ -3,6 +3,7 @@ import {
   OnChanges,
   SimpleChanges,
   AfterViewInit,
+  OnDestroy,
   Input,
   Inject,
   NgZone,
@@ -26,9 +27,10 @@ interface IData {
   styleUrls: ['./charts.component.scss']
 })
 
-export class ChartsComponent implements OnChanges, AfterViewInit {
+export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
   selected = 'cases';
   country = 'all';
+  isLoading = false;
 
   @Input() historicalData!: IHistData;
 
@@ -39,6 +41,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.historicalData) {
       if (changes[`historicalData`]) {
+        this.isLoading = true;
         this.selected = this.historicalData.valueName;
         this.country = this.historicalData ? `${this.historicalData.country}` : 'ALL';
         this.ngAfterViewInit();
@@ -59,19 +62,20 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
       am4core.useTheme(am4themes_animated);
 
       let chart = am4core.create("chartdiv", am4charts.XYChart);
-      am4core.options.autoDispose = true;
       chart.paddingRight = 20;
 
       const data: any[] = [];
-      console.log(this.historicalData.value);
+      if (this.isLoading){
+        console.log(this.historicalData.value);
 
-      const temp = Object.keys(this.historicalData.value);
-      temp.forEach(keyValue => {
-        const day = keyValue.split('/');
-        const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
-        const valueDate = this.historicalData.value[keyValue];
-        data.push({ date: dayDate, value: valueDate });
-      });
+        const temp = Object.keys(this.historicalData.value);
+        temp.forEach(keyValue => {
+          const day = keyValue.split('/');
+          const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
+          const valueDate = this.historicalData.value[keyValue];
+          data.push({ date: dayDate, value: valueDate });
+        });
+      }
       chart.data = data;
 
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -83,6 +87,9 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
 
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.dateX = "date";
+      series.dataFields.valueY = "value";
+      series.tooltipText = "{valueY.value}";
+
       const { valueName } = this.historicalData;
       if (valueName === 'cases') {
         series.tooltipText = "Cases: [bold]{valueY}[/]";
