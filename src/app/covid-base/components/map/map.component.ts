@@ -7,7 +7,6 @@ import {
   Inject,
   NgZone,
   PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
@@ -15,10 +14,10 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am4themes_dark from '@amcharts/amcharts4/themes/dark';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
-import { ICountries } from 'src/app/core/models/covid-base.models';
+import { ICountrData } from 'src/app/core/models/covid-base.models';
 
 interface IMapElement {
-  country: string;
+  name: string;
   value: number;
   lat: number;
   long: number;
@@ -31,40 +30,25 @@ interface IMapElement {
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnChanges, AfterViewInit {
-  @Input() countryData!: ICountries[];
-  dataAvailable = false;
+  @Input() countryData!: ICountrData[];
+
   inputData: IMapElement[] = [];
 
   private chart!: am4maps.MapChart;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {
-    const data: IMapElement[] = [];
-    this.countryData?.forEach(item => {
-      const country = item.country;
-      const { totalCases } = item;
-      const value = totalCases;
-      const { lat } = item.countryInfo;
-      const { long } = item.countryInfo;
-      const color = 'colors.confirmed';
-      data.push({country: country, value: value, lat: lat, long: long, color: color });
-      this.dataAvailable = true;
-    })
-    this.getDataForMap(data);
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // const data: IMapElement[] = [];
-    // this.countryData?.forEach(item => {
-    //   const country = item.country;
-    //   const { totalCases } = item;
-    //   const value = totalCases;
-    //   const { lat } = item.countryInfo;
-    //   const { long } = item.countryInfo;
-    //   const color = 'colors.confirmed';
-    //   data.push({country: country, value: value, lat: lat, long: long, color: color });
-    //   this.dataAvailable = true;
-    // })
-    // this.getDataForMap(data);
+    if (this.countryData) {
+      if (changes[`countryData`]) {
+        console.log(this.countryData);
+        // this.selected = this.historicalData.valueName;
+        // this.country = this.historicalData ? `${this.historicalData.country}` : 'all countries';
+        this.ngAfterViewInit();
+      }
+    }
   }
 
   getDataForMap(data:IMapElement[]): void {
@@ -87,11 +71,10 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
       const activeColor = am4core.color('#ff8726');
       const confirmedColor = am4core.color('#d21a1a');
-      const recoveredColor = am4core.color('#45d21a');
-      const deathsColor = am4core.color('#1c5fe5');
-      const textColor = am4core.color('#ffffff');
+      const recoveredColor = am4core.color('#0a710f');
+      const deathsColor = am4core.color('#ffffff');
 
-      const colors = { active: activeColor, confirmed: confirmedColor, recovered: recoveredColor, deaths: deathsColor };
+      const colors = { default: activeColor, cases: confirmedColor, recovered: recoveredColor, deaths: deathsColor };
 
       const chart = am4core.create('chartdiv', am4maps.MapChart);
       chart.marginTop = 50;
@@ -115,7 +98,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
       polygonSeries.useGeodata = true;
 
       const polygonTemplate = polygonSeries.mapPolygons.template;
-      polygonTemplate.tooltipText = '{name}';
+      polygonTemplate.tooltipText = '{name} {value}';
       polygonTemplate.fill = am4core.color('#8f606e');
       polygonTemplate.polygon.fillOpacity = 0.6;
       // polygonTemplate.fill = chart.colors.getIndex(0);
@@ -127,8 +110,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
       const imageSeries = chart.series.push(new am4maps.MapImageSeries());
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
       imageSeries.mapImages.template.propertyFields.latitude = 'lat';
-      imageSeries.mapImages.template.tooltipText = '{country}: {value}';
-      imageSeries.mapImages.template.propertyFields.url = 'url';
+      imageSeries.mapImages.template.tooltipText = '{name} {value}';
 
       const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
       circle.radius = 3;
@@ -148,22 +130,36 @@ export class MapComponent implements OnChanges, AfterViewInit {
       animation.events.on('animationended', function(event: any){
         animateBullet(event.target.object);
       })
-  }
+    }
 
-    const colorSet = new am4core.ColorSet();
+    let heatLegend = chart.createChild(am4maps.HeatLegend);
+    heatLegend.series = polygonSeries;
+    heatLegend.width = am4core.percent(100);
 
-    imageSeries.data = this.inputData;
-    // console.log(imageSeries.data);
+    const data: Partial<IMapElement[]> = [];
+      this.countryData?.forEach(item => {
+        const country = item.country;
+        const value = item.value;
+        const { lat } = item.countryInfo;
+        const { long } = item.countryInfo;
+        const valueName =  item.valueName;
+        type keys = 'cases'|'deaths'|'recovered';
+        let color = 'default';
+        if (valueName === 'cases') {
+          color =  String(colors['cases' as keys]);
+        }
+        if (valueName === 'deaths') {
+          color =  String(colors['deaths' as keys]);
+        }
+        if (valueName === 'recovered') {
+          color = String(colors['recovered' as keys]);
+        }
+        data.push({name: country, value: value, lat: lat, long: long, color: color });
+      })
 
-    imageSeries.data = [
-      {
-      country: 'Belarus',
-      value: 179196,
-      lat: 53,
-      long: 28,
-      color: `${colors.confirmed}`,
-      }
-    ]
+
+    imageSeries.data = data;
+    polygonSeries.data = data;
 
     })
 
