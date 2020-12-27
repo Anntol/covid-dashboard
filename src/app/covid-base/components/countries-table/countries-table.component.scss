@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  height: calc(100vh - 400px);
+  height: calc(70vh - 240px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -130,8 +130,9 @@ ul {
 .simple-keyboard {
   position: fixed;
   display: block;
+  left: 10%;
   padding: 10px;
-  max-width: 95%;
+  max-width: 80%;
   z-index: 100;
 }
 
@@ -143,7 +144,7 @@ ul {
 }
 
 .simple-keyboard.myTheme1 .hg-button {
-  height: 36px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
