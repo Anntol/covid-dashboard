@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICountries } from 'src/app/core/models/covid-base.models';
+import { ICountrData } from 'src/app/core/models/covid-base.models';
 import Keyboard from 'simple-keyboard';
 
 @Component({
@@ -27,12 +27,12 @@ import Keyboard from 'simple-keyboard';
 export class CountriesTableComponent implements OnInit, OnChanges, AfterViewInit{
 
   displayedColumns = ['cases', 'flag', 'country'];
-  dataSource!: MatTableDataSource<ICountries>;
+  dataSource!: MatTableDataSource<ICountrData>;
   searchCountry = '';
   keyboard!: Keyboard;
   isShown = false;
 
-  @Input() Countries!: ICountries[];
+  @Input() Countries!: ICountrData[];
   @Output() countrySelected: EventEmitter<string> = new EventEmitter();
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
 

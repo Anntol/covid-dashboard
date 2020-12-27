@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICountries } from '../../../core/models/covid-base.models';
+import { ICountrData } from '../../../core/models/covid-base.models';
 
 @Pipe({
   name: 'sortPipe'
 })
 export class SortPipe implements PipeTransform {
 
-  transform(array: ICountries[], args: string): ICountries[] {
+  transform(array: ICountrData[], args: string): ICountrData[] {
     if (array !== undefined) {
       array.sort((a: any, b: any) => {
           if ( a[args] < b[args] ){
