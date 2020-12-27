@@ -40,7 +40,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
     if (this.historicalData) {
       if (changes[`historicalData`]) {
         this.selected = this.historicalData.valueName;
-        this.country = this.historicalData ? `${this.historicalData.country}` : 'ALL countries';
+        this.country = this.historicalData ? `${this.historicalData.country}` : 'all countries';
         this.ngAfterViewInit();
       }
     }
@@ -60,18 +60,18 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
 
       let chart = am4core.create("chartsdiv", am4charts.XYChart);
       am4core.options.autoDispose = true;
-      chart.paddingRight = 20;
+      chart.paddingRight = 120;
 
       const data: any[] = [];
-      if (this.historicalData.value) {
-        const temp = Object.keys(this.historicalData.value);
-        temp.forEach(keyValue => {
-          const day = keyValue.split('/');
-          const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
-          const valueDate = this.historicalData.value[keyValue];
-          data.push({ date: dayDate, value: valueDate });
-        });
-      }
+      console.log(this.historicalData.value);
+
+      const temp = Object.keys(this.historicalData.value);
+      temp.forEach(keyValue => {
+        const day = keyValue.split('/');
+        const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
+        const valueDate = this.historicalData.value[keyValue];
+        data.push({ date: dayDate, value: valueDate });
+      });
       chart.data = data;
 
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -83,7 +83,6 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
 
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.dateX = "date";
-      series.dataFields.valueY = "value";
       const { valueName } = this.historicalData;
       if (valueName === 'cases') {
         series.tooltipText = "Cases: [bold]{valueY}[/]";

@@ -62,6 +62,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   links = ['Cases', 'Deaths', 'Recovered'];
 
   @Input() country: string = 'all';
+  // @Input() country: string = 'Australia';
   @Input() indicatorCovid: string = 'cases';
   dayToggle: boolean = false;
   populationToggle: boolean = false;
@@ -82,7 +83,7 @@ export class HomePageComponent implements OnInit, OnChanges {
     this.params.indicatorCovid = value;
     // this.getDataGlobal(this.params);
     this.getDataCountries(this.params);
-    // this.getDataCharts(this.params);
+    this.getDataCharts(this.params);
     this.cdr.detectChanges();
   }
 
@@ -90,7 +91,7 @@ export class HomePageComponent implements OnInit, OnChanges {
     this.params.country = countrySelected;
     // this.getDataGlobal(this.params);
     this.getDataCountries(this.params);
-    // this.getDataCharts(this.params);
+    this.getDataCharts(this.params);
     this.cdr.detectChanges();
   }
 
@@ -177,6 +178,8 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.storage.setDataGlobal(this.Global);
       this.storage.setDataCountries(this.Countries);
       this.storage.setDataHistorical(this.Historical);
+      this.getDataCountries(this.params);
+      this.getDataCharts(this.params);
     });
   }
 
@@ -200,31 +203,38 @@ export class HomePageComponent implements OnInit, OnChanges {
           value: value,
         });
       });
-      console.log('1-',this.countriesData);
+      // console.log('1-',this.params, this.countriesData);
     }
-      // console.log(this.HistGlobal, this.Historical);
 
-      // console.log(this.countriesData);
+    public getDataCharts(params: IParams): void {
+      type keys = 'cases'|'deaths'|'recovered';
+      const historical: IHistorical[] = this.Historical;
+      const histByCountry: IHistorical[] = historical.filter(item => item.country === params.country);
+      console.log('filter-', histByCountry);
+      const { timeline } = histByCountry[0];
+      const valueName = `${params.indicatorCovid}`;
+      const value = timeline[valueName as keys]
+      // const lenTimeLine = Object.keys(temp);
+      // lenTimeLine.forEach(keyValue => {
+        // for (let i = 0; i < histByCountry.length; i += 1){
+        //   type anyKeys = Required<IDayData>;
+        //   value += histByCountry[i].timeline[keyValue];
+        //   console.log(keyValue, value);
+        // }
+      // });
+
+      this.historicalData = {
+        country: histByCountry[0].country,
+        valueName: valueName,
+        value: value,
+      };
+      console.log('3-',this.params, this.historicalData);
+    }
       // // global
       // this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
       // const keyValue = `${this.params.indicatorCovid}`;
       // this.value = this.Global[keyValue as keys];
-      // // charts
-      // if((this.country === 'all') {
-      //   this.historicalData = {
-      //     country: this.params.country,
-      //     valueName: this.params.indicatorCovid,
-      //     value: {'fff': 25}
-      //     value: this.Historical[keyValue as keys],
-      //   }
-      // }
-      // this.historicalData = {
-      //   country: this.params.country,
-      //   valueName: this.params.indicatorCovid,
-      //   value: {'fff': 25}
-      //   value: this.Historical[keyValue as keys],
-      // }
-      // console.log(this.historicalData);
+
 
     // this.cdr.detectChanges()
 
