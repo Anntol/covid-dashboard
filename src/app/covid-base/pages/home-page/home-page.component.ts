@@ -242,7 +242,7 @@ export class HomePageComponent implements OnInit, OnChanges {
         // console.log(globalData);
       } else {
         const tempGlobal: ICountries[] = this.Countries;
-        const tempGlobalByCountry: Partial<ICountries[]> = tempGlobal.filter(item => item.country === params.country);
+        const tempGlobalByCountry: NonNullable<ICountries[]> = tempGlobal.filter(item => item.country === params.country);
         tempGlobalByCountry.forEach(element => {
           this.globalData.updated = Number(element.updated);
           this.globalData.country = String(element.country);

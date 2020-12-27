@@ -34,7 +34,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
   inputData: IMapElement[] = [];
 
-  private chart!: am4maps.MapChart;
+  private mChart!: am4maps.MapChart;
 
   constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {
 
@@ -76,42 +76,42 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
       const colors = { default: activeColor, cases: confirmedColor, recovered: recoveredColor, deaths: deathsColor };
 
-      const chart = am4core.create('chartdiv', am4maps.MapChart);
-      chart.marginTop = 50;
+      const mChart = am4core.create('mapdiv', am4maps.MapChart);
+      mChart.marginTop = 50;
 
-      chart.height = am4core.percent(97);
-      chart.zoomControl = new am4maps.ZoomControl();
-      chart.zoomControl.align = 'right';
-      chart.zoomControl.marginRight = 5;
-      chart.zoomControl.marginTop = 5;
-      chart.zoomControl.valign = 'bottom';
+      mChart.height = am4core.percent(97);
+      mChart.zoomControl = new am4maps.ZoomControl();
+      mChart.zoomControl.align = 'right';
+      mChart.zoomControl.marginRight = 5;
+      mChart.zoomControl.marginTop = 5;
+      mChart.zoomControl.valign = 'bottom';
 
-      chart.zoomEasing = am4core.ease.sinOut;
+      mChart.zoomEasing = am4core.ease.sinOut;
 
-      chart.geodata = am4geodata_worldLow;
+      mChart.geodata = am4geodata_worldLow;
 
-      chart.projection = new am4maps.projections.Mercator();
+      mChart.projection = new am4maps.projections.Mercator();
 
-      const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+      const polygonSeries = mChart.series.push(new am4maps.MapPolygonSeries());
 
       polygonSeries.exclude = ['AQ'];
       polygonSeries.useGeodata = true;
 
       const polygonTemplate = polygonSeries.mapPolygons.template;
-      polygonTemplate.tooltipText = '{name} {value}';
+      // polygonTemplate.tooltipText = '{name} {value}';
       polygonTemplate.fill = am4core.color('#8f606e');
       polygonTemplate.polygon.fillOpacity = 0.6;
-      // polygonTemplate.fill = chart.colors.getIndex(0);
+      // polygonTemplate.fill = mChart.colors.getIndex(0);
 
       const hs = polygonTemplate.states.create('hover');
-      hs.properties.fill = chart.colors.getIndex(0);
+      hs.properties.fill = mChart.colors.getIndex(0);
       // hs.properties.fill = am4core.color('#367B25');
 
-      const imageSeries = chart.series.push(new am4maps.MapImageSeries());
+      const imageSeries = mChart.series.push(new am4maps.MapImageSeries());
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
       imageSeries.mapImages.template.propertyFields.latitude = 'lat';
-      imageSeries.mapImages.template.tooltipText = '{name} {value}';
-
+      imageSeries.mapImages.template.tooltipText = '{name} [bold]{value}';
+    
       const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
       circle.radius = 3;
       circle.propertyFields.fill = 'color';
@@ -131,10 +131,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
         animateBullet(event.target.object);
       })
     }
-
-    let heatLegend = chart.createChild(am4maps.HeatLegend);
-    heatLegend.series = polygonSeries;
-    heatLegend.width = am4core.percent(100);
 
     const data: Partial<IMapElement[]> = [];
       this.countryData?.forEach(item => {
@@ -156,19 +152,15 @@ export class MapComponent implements OnChanges, AfterViewInit {
         }
         data.push({name: country, value: value, lat: lat, long: long, color: color });
       })
-
-
     imageSeries.data = data;
     polygonSeries.data = data;
-
     })
-
   }
 
   ngOnDestroy() {
     this.browserOnly(() => {
-      if (this.chart) {
-        this.chart.dispose();
+      if (this.mChart) {
+        this.mChart.dispose();
       }
     });
   }

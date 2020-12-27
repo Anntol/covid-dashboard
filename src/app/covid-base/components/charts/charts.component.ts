@@ -40,7 +40,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
     if (this.historicalData) {
       if (changes[`historicalData`]) {
         this.selected = this.historicalData.valueName;
-        this.country = this.historicalData ? `${this.historicalData.country}` : 'all countries';
+        this.country = this.historicalData ? `${this.historicalData.country}` : 'ALL';
         this.ngAfterViewInit();
       }
     }
@@ -58,9 +58,9 @@ export class ChartsComponent implements OnChanges, AfterViewInit {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
 
-      let chart = am4core.create("chartsdiv", am4charts.XYChart);
+      let chart = am4core.create("chartdiv", am4charts.XYChart);
       am4core.options.autoDispose = true;
-      chart.paddingRight = 120;
+      chart.paddingRight = 20;
 
       const data: any[] = [];
       console.log(this.historicalData.value);
