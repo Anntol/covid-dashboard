@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  height: calc(100vh - 400px);
+  height: calc(70vh - 235px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -77,17 +77,17 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: darkred; 
+  background: darkred;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: red; 
+  background: red;
 }
 
 .mat-header-row {
