@@ -26,19 +26,22 @@ import Keyboard from 'simple-keyboard';
 })
 export class CountriesTableComponent implements OnInit, OnChanges, AfterViewInit{
 
-  constructor() {}
-
   displayedColumns = ['cases', 'flag', 'country'];
   dataSource!: MatTableDataSource<ICountries>;
   searchCountry = '';
+  keyboard!: Keyboard;
+  isShown = false;
 
   @Input() Countries!: ICountries[];
   @Output() countrySelected: EventEmitter<string> = new EventEmitter();
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
-  // value = '';
-  keyboard!: Keyboard;
-  showKeyboard = false;
+  constructor() {}
+
+  toggleKeyboard(): any{
+    this.isShown = !this.isShown;
+    console.log(this.isShown);
+  }
 
   ngOnInit(): void {}
 
@@ -79,8 +82,5 @@ export class CountriesTableComponent implements OnInit, OnChanges, AfterViewInit
     });
   }
 
-  toggleKeyboard(): void{
-
-  }
 }
 

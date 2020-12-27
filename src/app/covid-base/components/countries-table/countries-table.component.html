@@ -1,18 +1,20 @@
 <mat-form-field>
   <mat-label>
     <mat-icon class="icon-search">search</mat-icon>
+    Search...
   </mat-label>
-  <input matInput [(ngModel)]="searchCountry">
-  <input matInput (input)="onInputChange($event)" value={{value}} [(ngModel)]="searchCountry" placeholder="Search Country...">
-  <mat-icon class="icon-keyboard" (click)="showKeyboard=!showKeyboard">keyboard</mat-icon>
+  <input matInput (input)="onInputChange($event)" value={{searchCountry}} [(ngModel)]="searchCountry">
+  <mat-icon class="icon-keyboard" (click)="toggleKeyboard()">keyboard</mat-icon>
 </mat-form-field>
 
-<div class="simple-keyboard" *ngIf="showKeyboard"></div> 
+<div>
+  <div class="simple-keyboard" [style.bottom]="isShown ? '1rem' : '-100%' "></div>
+</div>
 
 <div class="container mat-elevation-z8">
   <div class="table-container">
     <table  mat-table
-            [dataSource]="Countries | searchCountryPipe:searchCountry"
+            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe:'cases' "
             class="table">
       <ng-container matColumnDef="cases">
         <th mat-header-cell *matHeaderCellDef></th>

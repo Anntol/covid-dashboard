@@ -55,33 +55,8 @@ img {
   margin-right: 1rem;
 }
 
-.icon-search {
-  margin-right: .5rem;
-}
-
-.mat-icon.icon-keyboard,
-.mat-icon.icon-search {
-  font-size: 1rem;
-}
-
-.mat-icon.icon-keyboard {
-  position: absolute;
-  right: 0;
-  z-index: 20;
-}
-
-.mat-icon.icon-keyboard:hover {
-  cursor: pointer;
-} 
-
 th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
   padding-left: 1rem;
-}
-
-.mat-form-field {
-  width: 50%;
-  position: relative;
-  left: 25%;
 }
 
 /*
@@ -111,16 +86,53 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 }
 
 /*
-  Virtual keyboard
+  Input and Virtual keyboard
 */
+
+.icon-search {
+  margin-right: .5rem;
+}
+
+.mat-icon.icon-keyboard,
+.mat-icon.icon-search {
+  font-size: 1rem;
+  z-index: 50;
+}
+
+.mat-icon.icon-keyboard {
+  position: absolute;
+  right: 0;
+}
+
+.mat-icon.icon-keyboard:hover {
+  cursor: pointer;
+} 
+
+.mat-form-field {
+  width: 50%;
+  position: relative;
+  left: 25%;
+}
+
+.mat-form-field-appearance-legacy, 
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+input {
+  height: 1rem;
+}
 
 ul {
   text-align: center;
 }
 
 .simple-keyboard {
-  max-width: 100%;
-  position: relative;
+  position: fixed;
+  display: block;
+  padding: 10px;
+  max-width: 95%;
+  z-index: 100;
 }
 
 .simple-keyboard.myTheme1 {
@@ -131,11 +143,11 @@ ul {
 }
 
 .simple-keyboard.myTheme1 .hg-button {
-  height: 30px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
