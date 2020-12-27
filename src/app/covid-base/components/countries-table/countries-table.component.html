@@ -1,10 +1,13 @@
 <mat-form-field>
   <mat-label>
     <mat-icon class="icon-search">search</mat-icon>
-      Search Country...
   </mat-label>
   <input matInput [(ngModel)]="searchCountry">
+  <input matInput (input)="onInputChange($event)" value={{value}} [(ngModel)]="searchCountry" placeholder="Search Country...">
+  <mat-icon class="icon-keyboard" (click)="showKeyboard=!showKeyboard">keyboard</mat-icon>
 </mat-form-field>
+
+<div class="simple-keyboard" *ngIf="showKeyboard"></div> 
 
 <div class="container mat-elevation-z8">
   <div class="table-container">
