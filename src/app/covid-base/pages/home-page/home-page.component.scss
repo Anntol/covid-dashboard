@@ -62,7 +62,7 @@ $base-primary:  rgb(197, 17, 98);
   width: 95%;
   margin: 0 auto;
   @media screen and (max-width: 959px) {
-    width: calc(100vw - 30px);
+    width: calc(100vw - 40px);
   }
 }
 
@@ -128,4 +128,3 @@ mat-button-toggle {
     color: #20b120;
   }
 }
-

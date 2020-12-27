@@ -13,8 +13,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -36,6 +37,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     FormsModule,
     MatSlideToggleModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatSelectModule,
   ],
   exports: [
     CommonModule,
@@ -54,6 +57,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     FormsModule,
     MatSlideToggleModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatSelectModule,
   ]
 })
 export class SharedModule { }

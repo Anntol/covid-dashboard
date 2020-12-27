@@ -1,9 +1,3 @@
-export interface ICovid19 {
-  Global: IGlobal;
-  Countries: ICountries[];
-  Historical: IHistorical;
-}
-
 export interface IGlobal {
   updated: number,
   country: string,
@@ -31,17 +25,45 @@ export interface ICountries {
   cases: number;
   deaths: number;
   recovered: number;
-  totalCases: number;
-  totalDeaths: number;
-  totalRecovered: number;
+  todayCases: number;
+  todayDeaths: number;
+  todayRecovered: number;
   population: number;
+}
+
+export interface ICountrData {
+  updated: number;
+  country: string;
+  countryInfo: {
+    _id: number;
+    iso2: string;
+    iso3: string;
+    lat: number;
+    long: number;
+    flag: string;
+  };
+  population: number;
+  valueName: string;
   value: number;
 }
 
 export interface IHistorical {
+  updated: number;
+  country: string;
+  province: string;
+  timeline: ITimeLineGlobal;
+}
+
+export interface ITimeLineGlobal {
   cases: IDayData;
   deaths: IDayData;
   recovered: IDayData;
+}
+
+export interface IHistData {
+  country: string;
+  valueName: string;
+  value: IDayData;
 }
 
 export interface IDayData {
