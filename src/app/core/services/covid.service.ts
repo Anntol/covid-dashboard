@@ -7,8 +7,8 @@ import { ICountries, IGlobal, IHistorical, ITimeLineGlobal } from '../models/cov
 import { BASE_URL } from '../../shared/constants/constants';
 
 const COVID_URL = {
-  SUMMARY: `${BASE_URL}all?yesterday=true`,
-  COUNTRIES: `${BASE_URL}countries?yesterday=true`,
+  SUMMARY: `${BASE_URL}all`,
+  COUNTRIES: `${BASE_URL}countries`,
   HISTORICAL: `${BASE_URL}historical?lastdays=all`,
   HISTGLOBAL: `${BASE_URL}historical/all?lastdays=all`,
 }

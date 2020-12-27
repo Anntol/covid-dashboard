@@ -25,11 +25,10 @@ export interface ICountries {
   cases: number;
   deaths: number;
   recovered: number;
-  totalCases: number;
-  totalDeaths: number;
-  totalRecovered: number;
+  todayCases: number;
+  todayDeaths: number;
+  todayRecovered: number;
   population: number;
-  value: number;
 }
 
 export interface ICountrData {

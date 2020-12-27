@@ -49,6 +49,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   Countries!: ICountries[];
   countriesData!: ICountrData[];
   Global!: IGlobal;
+  globalData!: IGlobal;
   Historical!: IHistorical[];
   historicalData!: IHistData;
   HistGlobal!: ITimeLineGlobal;
@@ -81,7 +82,7 @@ export class HomePageComponent implements OnInit, OnChanges {
 
   public setIndicatorCovid(value: string): void {
     this.params.indicatorCovid = value;
-    // this.getDataGlobal(this.params);
+    this.getDataGlobal(this.params);
     this.getDataCountries(this.params);
     this.getDataCharts(this.params);
     this.cdr.detectChanges();
@@ -89,7 +90,7 @@ export class HomePageComponent implements OnInit, OnChanges {
 
   public setCountry(countrySelected: string): void {
     this.params.country = countrySelected;
-    // this.getDataGlobal(this.params);
+    this.getDataGlobal(this.params);
     this.getDataCountries(this.params);
     this.getDataCharts(this.params);
     this.cdr.detectChanges();
@@ -180,6 +181,7 @@ export class HomePageComponent implements OnInit, OnChanges {
       this.storage.setDataHistorical(this.Historical);
       this.getDataCountries(this.params);
       this.getDataCharts(this.params);
+      this.getDataGlobal(this.params);
     });
   }
 
@@ -210,33 +212,55 @@ export class HomePageComponent implements OnInit, OnChanges {
       type keys = 'cases'|'deaths'|'recovered';
       const historical: IHistorical[] = this.Historical;
       const histByCountry: IHistorical[] = historical.filter(item => item.country === params.country);
-      console.log('filter-', histByCountry);
       const { timeline } = histByCountry[0];
       const valueName = `${params.indicatorCovid}`;
-      const value = timeline[valueName as keys]
+      const value = timeline[valueName as keys];
+      // есть вопрос по TS, как можно наqти частные суммы, если каждый keyValue typeof 'string', а общее к-во их почти 300))
       // const lenTimeLine = Object.keys(temp);
       // lenTimeLine.forEach(keyValue => {
-        // for (let i = 0; i < histByCountry.length; i += 1){
-        //   type anyKeys = Required<IDayData>;
-        //   value += histByCountry[i].timeline[keyValue];
-        //   console.log(keyValue, value);
-        // }
-      // });
-
+      // for (let i = 0; i < histByCountry.length; i += 1){
+      //   type anyKeys = Required<IDayData>;
+      //   value += histByCountry[i].timeline[keyValue as anykeys];
+      //   console.log(keyValue, value);
+      // }
+      //});
       this.historicalData = {
         country: histByCountry[0].country,
         valueName: valueName,
         value: value,
       };
-      console.log('3-',this.params, this.historicalData);
+      // console.log('3-',this.params, this.historicalData);
     }
-      // // global
-      // this.title = 'Total' + ` ${this.params.indicatorCovid}`.toUpperCase();
-      // const keyValue = `${this.params.indicatorCovid}`;
-      // this.value = this.Global[keyValue as keys];
 
+    public getDataGlobal(params: IParams): void {
+      type keys = 'cases'|'deaths'|'recovered';
 
-    // this.cdr.detectChanges()
+      if  (params.country === 'all') {
+        this.globalData = this.Global;
+        this.globalData.updated = 0;
+        this.globalData.country = params.country;
+        // console.log(globalData);
+      } else {
+        const tempGlobal: ICountries[] = this.Countries;
+        const tempGlobalByCountry: Partial<ICountries[]> = tempGlobal.filter(item => item.country === params.country);
+        tempGlobalByCountry.forEach(element => {
+          this.globalData.updated = Number(element.updated);
+          this.globalData.country = String(element.country);
+          this.globalData.todayCases = Number(element.todayCases);
+          this.globalData.cases = Number(element.cases);
+          this.globalData.todayDeaths = Number(element.todayDeaths);
+          this.globalData.deaths = Number(element.deaths);
+          this.globalData.todayRecovered = Number(element.todayRecovered);
+          this.globalData.recovered = Number(element.recovered);
+        });
+        console.log(this.globalData);
+      }
+      // this.title = (params.country === 'all') ? 'Total'
+      //              : `${params.country}` + ` ${params.indicatorCovid}`.toUpperCase();
+      this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
+      const keyValue = `${params.indicatorCovid}`;
+      this.value = this.Global[keyValue as keys];
+    }
 
     ngOnDestroy() {
       this.subscriptions.forEach(
