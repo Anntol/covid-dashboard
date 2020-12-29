@@ -16,11 +16,6 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 import { IHistData } from '../../../core/models/covid-base.models';
 
-interface IData {
-  date: Date,
-  Value: any,
-}
-
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
@@ -49,7 +44,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  browserOnly(f:() => void) {
+  browserOnly(f: () => void): void {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
@@ -57,10 +52,10 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
-      let chart = am4core.create("chartdiv", am4charts.XYChart);
+      const chart = am4core.create('chartdiv', am4charts.XYChart);
       chart.paddingRight = 20;
 
       const data: any[] = [];
@@ -75,38 +70,38 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
       }
       chart.data = data;
 
-      let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.grid.template.location = 0;
-      chart.dateFormatter.dateFormat = "MM-dd";
+      chart.dateFormatter.dateFormat = 'MM-dd';
 
-      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.minWidth = 35;
       valueAxis.rangeChangeDuration = 0;
 
-      let series = chart.series.push(new am4charts.ColumnSeries());
-      series.dataFields.dateX = "date";
-      series.dataFields.valueY = "value";
-      series.tooltipText = "{valueY.value}";
+      const series = chart.series.push(new am4charts.ColumnSeries());
+      series.dataFields.dateX = 'date';
+      series.dataFields.valueY = 'value';
+      series.tooltipText = '{valueY.value}';
 
       if (this.historicalData){
         const { valueName } = this.historicalData;
         if (valueName === 'cases') {
-          series.tooltipText = "Cases: [bold]{valueY}[/]";
-          series.columns.template.fill = am4core.color("red");
+          series.tooltipText = 'Cases: [bold]{valueY}[/]';
+          series.columns.template.fill = am4core.color('red');
         }
         if (valueName === 'deaths') {
-          series.tooltipText = "Deaths: [bold]{valueY}[/]";
+          series.tooltipText = 'Deaths: [bold]{valueY}[/]';
         }
         if (valueName === 'recovered') {
-          series.tooltipText = "Recovered: [bold]{valueY}[/]";
-          series.columns.template.fill = am4core.color("green");
+          series.tooltipText = 'Recovered: [bold]{valueY}[/]';
+          series.columns.template.fill = am4core.color('green');
         }
       } else {
-        series.columns.template.fill = am4core.color("yellow");
+        series.columns.template.fill = am4core.color('yellow');
       }
       chart.cursor = new am4charts.XYCursor();
 
-      let scrollbarX = new am4charts.XYChartScrollbar();
+      const scrollbarX = new am4charts.XYChartScrollbar();
       scrollbarX.series.push(series);
       scrollbarX.minHeight = 30;
       chart.scrollbarX = scrollbarX;
@@ -115,7 +110,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.browserOnly(() => {
       if (this.chart) {
         this.isLoading = false;

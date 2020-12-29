@@ -5,7 +5,8 @@ import {
   SimpleChanges,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef } from '@angular/core';
+  ChangeDetectorRef,
+  OnDestroy} from '@angular/core';
 
 import { SubscriptionLike } from 'rxjs';
 
@@ -45,7 +46,7 @@ interface BorderStyle {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class HomePageComponent implements OnInit, OnChanges {
+export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
   Countries!: ICountries[];
   countriesData!: ICountrData[];
   Global!: IGlobal;
@@ -62,13 +63,19 @@ export class HomePageComponent implements OnInit, OnChanges {
   dateUpdate: any = '';
   links = ['Cases', 'Deaths', 'Recovered'];
 
-  @Input() country: string = 'all';
-  // @Input() country: string = 'Australia';
-  @Input() indicatorCovid: string = 'cases';
-  dayToggle: boolean = false;
-  populationToggle: boolean = false;
+  @Input() country = 'all';
+  @Input() indicatorCovid = 'cases';
+  dayToggle = false;
+  populationToggle = false;
 
   subscriptions: SubscriptionLike[] = [];
+
+  params: IParams = {
+    country: this.country,
+    indicatorCovid: this.indicatorCovid,
+    isAbsolutPopulation: this.populationToggle,
+    isDataOneDay: this.dayToggle,
+  };
 
   constructor(
     private covidService: CovidService,
@@ -109,7 +116,7 @@ export class HomePageComponent implements OnInit, OnChanges {
   setBlockVisibility(el: any): BlockVisible  {
     return {
       block__noVisible: (el !== this.blockId && this.toggleBlock),
-      block__visible: el == this.blockId,
+      block__visible: el === this.blockId,
     };
   }
 
@@ -119,35 +126,28 @@ export class HomePageComponent implements OnInit, OnChanges {
       console.log(this.toggleBlock, style);
       style = 'width: calc(100vw - 40px); height: calc(100vh - 144px)';
     } else {
-    switch (index) {
-      case 1:
-        style = 'height: 150px';
-        break;
-      case 2:
-        style = 'height: calc(100vh - 225px)';
-        break;
-      case 3:
-        style = 'height: calc(50vh - 125px)';
-        break;
-      case 4:
-        style = 'height: calc(100vh - 325px)';
-        break;
-      case 5:
-        style = 'height: 50px';
-        break;
-      case 6:
-        style = 'height: calc(50vh - 50px)';
-        break;
+      switch (index) {
+        case 1:
+          style = 'height: 150px';
+          break;
+        case 2:
+          style = 'height: calc(100vh - 225px)';
+          break;
+        case 3:
+          style = 'height: calc(50vh - 125px)';
+          break;
+        case 4:
+          style = 'height: calc(100vh - 325px)';
+          break;
+        case 5:
+          style = 'height: 50px';
+          break;
+        case 6:
+          style = 'height: calc(50vh - 50px)';
+          break;
+      }
+      return style;
     }
-    return style;
-  }
-  }
-
-  params: IParams = {
-    country: this.country,
-    indicatorCovid: this.indicatorCovid,
-    isAbsolutPopulation: this.populationToggle,
-    isDataOneDay: this.dayToggle,
   }
 
   public ngOnInit(): void {
@@ -159,7 +159,7 @@ export class HomePageComponent implements OnInit, OnChanges {
       if (changes[`country`] || changes[`indicatorCovid`]) {
         this.setCountry(this.country);
         this.setIndicatorCovid(this.indicatorCovid);
-      };
+      }
     }
   }
 
@@ -197,16 +197,15 @@ export class HomePageComponent implements OnInit, OnChanges {
         const valueName = `${params.indicatorCovid}`;
         const value = item[valueName as keys];
         this.countriesData.push({
-          updated: updated,
-          country: country,
-          countryInfo: countryInfo,
-          population: population,
-          valueName: valueName,
-          value: value,
+          updated,
+          country,
+          countryInfo,
+          population,
+          valueName,
+          value,
         });
       });
       this.cdr.detectChanges();
-      // console.log('1-',this.params, this.countriesData);
     }
 
     public getDataCharts(params: IParams): void {
@@ -216,28 +215,29 @@ export class HomePageComponent implements OnInit, OnChanges {
       const { timeline } = histByCountry[0];
       const valueName = `${params.indicatorCovid}`;
       const value = timeline[valueName as keys];
-      // есть вопрос по TS, как можно наqти частные суммы, если каждый keyValue typeof 'string', а общее к-во их почти 300))
-      // const lenTimeLine = Object.keys(temp);
-      // lenTimeLine.forEach(keyValue => {
-      // for (let i = 0; i < histByCountry.length; i += 1){
-      //   type anyKeys = Required<IDayData>;
-      //   value += histByCountry[i].timeline[keyValue as anykeys];
-      //   console.log(keyValue, value);
-      // }
-      //});
+
+      /* есть вопрос по TS, как можно наqти частные суммы, если каждый keyValue typeof 'string', а общее к-во их почти 300))
+      const lenTimeLine = Object.keys(temp);
+      lenTimeLine.forEach(keyValue => {
+      for (let i = 0; i < histByCountry.length; i += 1){
+        type anyKeys = Required<IDayData>;
+        value += histByCountry[i].timeline[keyValue as anykeys];
+        console.log(keyValue, value);
+      }
+      }); */
+
       this.historicalData = {
         country: histByCountry[0].country,
-        valueName: valueName,
-        value: value,
+        valueName,
+        value,
       };
       this.cdr.detectChanges();
-      // console.log('3-',this.params, this.historicalData);
     }
 
     public getDataGlobal(params: IParams): void {
       type keys = 'cases'|'deaths'|'recovered';
 
-      if  (params.country === 'all') {
+      if (params.country === 'all') {
         this.globalData = this.Global;
         this.globalData.updated = 0;
         this.globalData.country = params.country;
@@ -254,21 +254,19 @@ export class HomePageComponent implements OnInit, OnChanges {
           this.globalData.todayRecovered = Number(element.todayRecovered);
           this.globalData.recovered = Number(element.recovered);
         });
-        // console.log(this.globalData);
       }
-      // this.title = (params.country === 'all') ? 'Total'
-      //              : `${params.country}` + ` ${params.indicatorCovid}`.toUpperCase();
+
       if (params.indicatorCovid) {
         this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
         const keyValue = `${params.indicatorCovid}`;
-        // console.log(this.Global);
+
         this.value = this.Global[keyValue as keys];
         this.globalData = this.globalData;
       }
       this.cdr.detectChanges();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
       this.subscriptions.forEach(
         (subscription) => subscription.unsubscribe());
       this.subscriptions = [];

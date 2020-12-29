@@ -17,15 +17,15 @@ export class StorageService {
   historical$: Observable<IHistorical[]> = this.dataHistorical.asObservable();
 
 
-  setDataGlobal(newValue: IGlobal) {
+  setDataGlobal(newValue: IGlobal): void {
     this.dataGlobal.next(newValue);
   }
 
-  setDataCountries(newValue: ICountries[]) {
+  setDataCountries(newValue: ICountries[]): void {
     this.dataCountries.next(newValue);
   }
 
-  setDataHistorical(newValue: IHistorical[]) {
+  setDataHistorical(newValue: IHistorical[]): void {
     this.dataHistorical.next(newValue);
   }
 

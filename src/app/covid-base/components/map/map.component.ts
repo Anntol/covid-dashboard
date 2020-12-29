@@ -44,13 +44,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.countryData) {
       if (changes[`countryData`]) {
-        // console.log(this.countryData);
         this.ngAfterViewInit();
       }
     }
   }
 
-  browserOnly(f: () => void) {
+  browserOnly(f: () => void): void {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
@@ -58,7 +57,7 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
@@ -93,14 +92,11 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       polygonSeries.useGeodata = true;
 
       const polygonTemplate = polygonSeries.mapPolygons.template;
-      // polygonTemplate.tooltipText = '{name} {value}';
       polygonTemplate.fill = am4core.color('#8f606e');
       polygonTemplate.polygon.fillOpacity = 0.6;
-      // polygonTemplate.fill = mChart.colors.getIndex(0);
 
       const hs = polygonTemplate.states.create('hover');
       hs.properties.fill = mChart.colors.getIndex(0);
-      // hs.properties.fill = am4core.color('#367B25');
 
       const imageSeries = mChart.series.push(new am4maps.MapImageSeries());
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
@@ -115,20 +111,16 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       circle2.radius = 3;
       circle2.propertyFields.fill = 'color';
 
+      circle2.events.on('inited', (event) => animateBullet(event.target));
 
-      circle2.events.on('inited', function(event){
-        animateBullet(event.target);
-    })
+      function animateBullet(animatedCircle: any): void {
+        const animation = animatedCircle.animate([{ property: 'scale', from: 1, to: 3 },
+          { property: 'opacity', from: 1, to: 0 }], 1000, am4core.ease.circleOut);
+        animation.events.on('animationended', (event: any) => animateBullet(event.target.object));
+      }
 
-    function animateBullet(circle: any) {
-      const animation = circle.animate([{ property: 'scale', from: 1, to: 3 }, { property: 'opacity', from: 1, to: 0 }], 1000, am4core.ease.circleOut);
-      animation.events.on('animationended', function(event: any){
-        animateBullet(event.target.object);
-      })
-    }
-
-    const data: Partial<IMapElement[]> = [];
-    this.countryData?.forEach(item => {
+      const data: Partial<IMapElement[]> = [];
+      this.countryData?.forEach(item => {
       const country = item.country;
       const value = item.value;
       const { lat } = item.countryInfo;
@@ -145,14 +137,14 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       if (valueName === 'recovered') {
         color = String(colors['recovered' as keys]);
       }
-      data.push({name: country, value: value, lat: lat, long: long, color: color });
-    })
-    imageSeries.data = data;
-    polygonSeries.data = data;
-    })
+      data.push({name: country, value, lat, long, color });
+    });
+      imageSeries.data = data;
+      polygonSeries.data = data;
+    });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.browserOnly(() => {
       if (this.mChart) {
         this.mChart.dispose();

@@ -11,7 +11,7 @@ const COVID_URL = {
   COUNTRIES: `${BASE_URL}countries`,
   HISTORICAL: `${BASE_URL}historical?lastdays=all`,
   HISTGLOBAL: `${BASE_URL}historical/all?lastdays=all`,
-}
+};
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class CovidService {
   constructor(private http: HttpClient) {}
 
     public getAllDataCovidApi(): Observable<any> {
-      const joined$ = forkJoin(
+      const joined$ = forkJoin([
         this.http.get<IGlobal>(`${COVID_URL. SUMMARY}`).pipe(
           tap(response =>  this.Global = response)
         ),
@@ -42,11 +42,12 @@ export class CovidService {
         this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`).pipe(
           tap(response => this.HistGlobal = response)
         ),
-        // catchError((err: HttpErrorResponse) => {
-        //   console.error(err.status, err.message);
-        //   return of(joined$);
-        // })
-      );
+        /* TODO error catching
+           catchError((err: HttpErrorResponse) => {
+           console.error(err.status, err.message);
+           return of(joined$);
+         }) */
+        ]);
       return joined$;
     }
 }
