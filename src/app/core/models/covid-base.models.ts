@@ -8,7 +8,6 @@ export interface IGlobal {
   todayCases: number,
   todayDeaths: number,
   todayRecovered: number;
-  value: number;
 }
 
 export interface ICountries {

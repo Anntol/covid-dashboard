@@ -4,6 +4,7 @@ import {
   OnChanges,
   SimpleChanges,
   OnInit,
+  OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef } from '@angular/core';
 
@@ -45,7 +46,7 @@ interface BorderStyle {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class HomePageComponent implements OnInit, OnChanges {
+export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
   Countries!: ICountries[];
   countriesData!: ICountrData[];
   Global!: IGlobal;
@@ -116,7 +117,6 @@ export class HomePageComponent implements OnInit, OnChanges {
   getSizeBlock(index: number): string | void {
     let style;
     if (this.toggleBlock) {
-      console.log(this.toggleBlock, style);
       style = 'width: calc(100vw - 40px); height: calc(100vh - 144px)';
     } else {
     switch (index) {
@@ -206,7 +206,6 @@ export class HomePageComponent implements OnInit, OnChanges {
         });
       });
       this.cdr.detectChanges();
-      // console.log('1-',this.params, this.countriesData);
     }
 
     public getDataCharts(params: IParams): void {
@@ -231,7 +230,6 @@ export class HomePageComponent implements OnInit, OnChanges {
         value: value,
       };
       this.cdr.detectChanges();
-      // console.log('3-',this.params, this.historicalData);
     }
 
     public getDataGlobal(params: IParams): void {
@@ -245,23 +243,15 @@ export class HomePageComponent implements OnInit, OnChanges {
         const tempGlobal: ICountries[] = this.Countries;
         const tempGlobalByCountry: NonNullable<ICountries[]> = tempGlobal.filter(item => item.country === params.country);
         tempGlobalByCountry.forEach(element => {
-          this.globalData.updated = Number(element.updated);
-          this.globalData.country = String(element.country);
-          this.globalData.todayCases = Number(element.todayCases);
-          this.globalData.cases = Number(element.cases);
-          this.globalData.todayDeaths = Number(element.todayDeaths);
-          this.globalData.deaths = Number(element.deaths);
-          this.globalData.todayRecovered = Number(element.todayRecovered);
-          this.globalData.recovered = Number(element.recovered);
+         this.globalData = { ...element };
+
         });
-        // console.log(this.globalData);
+        console.log(this.globalData);
       }
-      // this.title = (params.country === 'all') ? 'Total'
-      //              : `${params.country}` + ` ${params.indicatorCovid}`.toUpperCase();
+
       if (params.indicatorCovid) {
         this.title = 'Total' + ` ${params.indicatorCovid}`.toUpperCase();
         const keyValue = `${params.indicatorCovid}`;
-        // console.log(this.Global);
         this.value = this.Global[keyValue as keys];
         this.globalData = this.globalData;
       }
