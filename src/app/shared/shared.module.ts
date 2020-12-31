@@ -17,7 +17,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
 @NgModule({
   declarations: [],
   imports: [
@@ -59,6 +58,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatButtonModule,
     MatButtonToggleModule,
     MatSelectModule,
-  ]
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { ICountries, IGlobal, IHistorical } from './../models/covid-base.models';
+import { ICountries, IGlobal, IHistorical } from '../models/covid-base.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-
   private dataGlobal: Subject<IGlobal> = new Subject();
+
   global$: Observable<IGlobal> = this.dataGlobal.asObservable();
 
   private dataCountries: Subject<ICountries[]> = new Subject();
+
   countries$: Observable<ICountries[]> = this.dataCountries.asObservable();
 
   private dataHistorical: Subject<IHistorical[]> = new Subject();
-  historical$: Observable<IHistorical[]> = this.dataHistorical.asObservable();
 
+  historical$: Observable<IHistorical[]> = this.dataHistorical.asObservable();
 
   setDataGlobal(newValue: IGlobal) {
     this.dataGlobal.next(newValue);
@@ -28,5 +29,4 @@ export class StorageService {
   setDataHistorical(newValue: IHistorical[]) {
     this.dataHistorical.next(newValue);
   }
-
 }

@@ -1,5 +1,10 @@
 module.exports = {
   root: true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "*.spec.ts",
+    "main.ts", "test.ts"
+  ],
   overrides: [
     {
       files: ["*.ts"],
@@ -12,26 +17,47 @@ module.exports = {
       },
       extends: [
         "plugin:@angular-eslint/recommended",
-        'airbnb-typescript/base',
-        'prettier/@typescript-eslint',
-        'plugin:prettier/recommended'
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "airbnb-typescript/base",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        // "prettier/@typescript-eslint",
+        // "plugin:prettier/recommended"
       ],
       rules: {
-        "no-var": "error",
-        "semi": "error",
-        "indent": "error",
-        "no-multi-spaces": "error",
-        "space-in-parens": "error",
-        "no-multiple-empty-lines": "error",
-        "prefer-const": "error",
-        'import/no-unresolved': 'off',
-        'import/prefer-default-export': 'off',
-        'class-methods-use-this': 'off',
-        'lines-between-class-members': 'off',
-        '@typescript-eslint/unbound-method': [
-          'error',
+        "import/no-unresolved": "off",
+        "import/prefer-default-export": "off",
+        "class-methods-use-this": "off",
+        "lines-between-class-members": "off",
+        "no-return-assign": "error",
+        "max-len": [
+          "error",
           {
-            ignoreStatic: true,
+            "code": 130,
+            "tabWidth": 2
+            }
+        ],
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
           }
         ]
       }
@@ -52,7 +78,7 @@ module.exports = {
       files: ["*.component.html"],
       extends: ["plugin:@angular-eslint/template/recommended"],
       rules: {
-        "max-len": ["error", { "code": 140 }]
+        "max-len": ["error", { "code": 130 }]
       }
     },
     {

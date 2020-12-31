@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { SharedModule } from '../shared/shared.module';
 import { ChartsComponent } from './components/charts/charts.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -8,7 +9,6 @@ import { CountriesTableComponent } from './components/countries-table/countries-
 import { SearchCountryPipe } from './components/countries-table/search-country.pipe';
 import { SortPipe } from './components/countries-table/sort.pipe';
 import { MapComponent } from './components/map/map.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -18,14 +18,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     CountriesTableComponent,
     SearchCountryPipe,
     SortPipe,
-    MapComponent
+    MapComponent,
   ],
 
-  imports: [
-    CommonModule,
-    SharedModule,
-    MatButtonToggleModule,
-  ],
+  imports: [CommonModule, SharedModule, MatButtonToggleModule],
 
   exports: [
     ChartsComponent,
@@ -34,7 +30,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     CountriesTableComponent,
     SearchCountryPipe,
     SortPipe,
-    MapComponent
-  ]
+    MapComponent,
+  ],
 })
-export class CovidBaseModule { }
+export class CovidBaseModule {}

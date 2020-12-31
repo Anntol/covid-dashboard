@@ -3,12 +3,13 @@
   height: 30vh;
 }
 
-.charts-buttons,
-mat-form-field  {
+.charts-buttons {
   position:  absolute;
   top: 25px;
   right: 10px;
 }
-mat-form-field  {
+.charts-select {
+  position:  absolute;
   top: 65px;
+  right: 10px;
 }

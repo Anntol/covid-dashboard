@@ -1,13 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable no-return-assign */
 import {
-  Component,
-  Input,
-  OnChanges,
-  AfterViewInit,
-  OnDestroy,
-  SimpleChanges,
-  Inject,
-  NgZone,
-  PLATFORM_ID } from '@angular/core';
+  Component, Input, OnChanges, AfterViewInit, OnDestroy, SimpleChanges, Inject, NgZone, PLATFORM_ID
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
@@ -28,7 +25,7 @@ interface IMapElement {
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() countryData!: ICountrData[];
@@ -37,13 +34,11 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private mChart!: am4maps.MapChart;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {
-
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: string, private zone: NgZone) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.countryData) {
-      if (changes[`countryData`]) {
+      if (changes.countryData) {
         // console.log(this.countryData);
         this.ngAfterViewInit();
       }
@@ -69,7 +64,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       const recoveredColor = am4core.color('#0a710f');
       const deathsColor = am4core.color('#ffffff');
 
-      const colors = { default: activeColor, cases: confirmedColor, recovered: recoveredColor, deaths: deathsColor };
+      const colors = {
+        default: activeColor,
+        cases: confirmedColor,
+        recovered: recoveredColor,
+        deaths: deathsColor,
+      };
 
       const mChart = am4core.create('mapdiv', am4maps.MapChart);
       mChart.marginTop = 50;
@@ -115,49 +115,57 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       circle2.radius = 3;
       circle2.propertyFields.fill = 'color';
 
+      function animateBullet(circle: am4core.Circle): void {
+        const animation: am4core.Animation = circle.animate(
+          [
+            { property: 'scale', from: 1, to: 3 },
+            { property: 'opacity', from: 1, to: 0 },
+          ],
+          1000,
+          am4core.ease.circleOut,
+        );
+        animation.events.on('animationended', function (event: any) {
+          animateBullet(event.target.object)
+        });
+      }
 
-      circle2.events.on('inited', function(event){
+      circle2.events.on('inited', function (event: any): void {
         animateBullet(event.target);
-    })
+      });
 
-    function animateBullet(circle: any) {
-      const animation = circle.animate([{ property: 'scale', from: 1, to: 3 }, { property: 'opacity', from: 1, to: 0 }], 1000, am4core.ease.circleOut);
-      animation.events.on('animationended', function(event: any){
-        animateBullet(event.target.object);
-      })
-    }
+      const data: Partial<IMapElement[]> = [];
+      this.countryData?.forEach((item) => {
+        const { country } = item;
+        const { value } = item;
+        const { lat } = item.countryInfo;
+        const { long } = item.countryInfo;
+        const { valueName } = item;
+        type Keys = 'cases' | 'deaths' | 'recovered';
+        let color = 'default';
+        if (valueName === 'cases') {
+          color = String(colors['cases' as Keys]);
+        }
 
-    const data: Partial<IMapElement[]> = [];
-    this.countryData?.forEach(item => {
-      const country = item.country;
-      const value = item.value;
-      const { lat } = item.countryInfo;
-      const { long } = item.countryInfo;
-      const valueName =  item.valueName;
-      type keys = 'cases'|'deaths'|'recovered';
-      let color = 'default';
-      if (valueName === 'cases') {
-        color =  String(colors['cases' as keys]);
-      }
-      if (valueName === 'deaths') {
-        color =  String(colors['deaths' as keys]);
-      }
-      if (valueName === 'recovered') {
-        color = String(colors['recovered' as keys]);
-      }
-      data.push({name: country, value: value, lat: lat, long: long, color: color });
-    })
-    imageSeries.data = data;
-    polygonSeries.data = data;
-    })
+        if (valueName === 'deaths') {
+          color = String(colors['deaths' as Keys]);
+        }
+
+        if (valueName === 'recovered') {
+          color = String(colors['recovered' as Keys]);
+        }
+
+        data.push({ name: country, value, lat, long, color });
+      });
+      imageSeries.data = data;
+      polygonSeries.data = data;
+    });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.browserOnly(() => {
       if (this.mChart) {
         this.mChart.dispose();
       }
     });
   }
-
 }

@@ -1,12 +1,12 @@
 export interface IGlobal {
-  updated: number,
-  country: string,
-  population: number,
-  cases: number,
-  deaths: number,
+  updated: number;
+  country: string;
+  population: number;
+  cases: number;
+  deaths: number;
   recovered: number;
-  todayCases: number,
-  todayDeaths: number,
+  todayCases: number;
+  todayDeaths: number;
   todayRecovered: number;
 }
 
@@ -68,5 +68,3 @@ export interface IHistData {
 export interface IDayData {
   [propName: string]: number;
 }
-
-

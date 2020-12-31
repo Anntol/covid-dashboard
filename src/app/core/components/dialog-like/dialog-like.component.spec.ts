@@ -8,9 +8,8 @@ describe('DialogLikeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogLikeComponent ]
-    })
-    .compileComponents();
+      declarations: [DialogLikeComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
