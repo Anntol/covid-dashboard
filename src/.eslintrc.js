@@ -22,21 +22,25 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        // "prettier/@typescript-eslint",
-        // "plugin:prettier/recommended"
+        "prettier/@typescript-eslint"
       ],
       rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "import/no-unresolved": "off",
         "import/prefer-default-export": "off",
         "class-methods-use-this": "off",
         "lines-between-class-members": "off",
         "no-return-assign": "error",
+        "no-shadow" : "off" ,
         "max-len": [
-          "error",
-          {
-            "code": 130,
-            "tabWidth": 2
-            }
+        "error",
+        {
+          "code": 130,
+          "tabWidth": 2
+          }
+        ],
+        "@typescript-eslint/no-shadow" : [
+          "error"
         ],
         "@typescript-eslint/unbound-method": [
           "error",
@@ -60,7 +64,16 @@ module.exports = {
             "style": "camelCase"
           }
         ]
-      }
+      },
+      "overrides": [
+        {
+          // enable the rule specifically for TypeScript files
+          "files": ["*.ts", "*.tsx"],
+          "rules": {
+            "@typescript-eslint/explicit-module-boundary-types": ["error"]
+          }
+        }
+      ]
     },
     {
       files: ['src/**/*.spec.ts', 'src/**/*.d.ts'],
