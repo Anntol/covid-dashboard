@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// I don't know how to avoid these warnings
 /* eslint-disable eqeqeq */
-/* eslint-disable no-return-assign */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {
   Component,
   Input,
@@ -10,8 +11,7 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-}
-  from '@angular/core';
+} from '@angular/core';
 
 import { SubscriptionLike } from 'rxjs';
 
@@ -45,6 +45,7 @@ interface BlockVisible {
   styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
   Countries!: ICountries[];
 
@@ -84,10 +85,23 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
 
   subscriptions: SubscriptionLike[] = [];
 
+  params: IParams = {
+    country: this.country,
+    indicatorCovid: this.indicatorCovid,
+    isAbsolutPopulation: this.populationToggle,
+    isDataOneDay: this.dayToggle,
+  };
+
   constructor(private covidService: CovidService, private cdr: ChangeDetectorRef, public storage: StorageService) {
-    this.subscriptions.push(this.storage.global$.subscribe((data) => (this.Global = data)));
-    this.subscriptions.push(this.storage.countries$.subscribe((data) => (this.Countries = data)));
-    this.subscriptions.push(this.storage.historical$.subscribe((data) => (this.Historical = data)));
+    this.subscriptions.push(this.storage.global$.subscribe((data) => {
+      this.Global = data
+    }));
+    this.subscriptions.push(this.storage.countries$.subscribe((data) => {
+      this.Countries = data
+    }));
+      this.subscriptions.push(this.storage.historical$.subscribe((data) => {
+      this.Historical = data
+    }));
   }
 
   public setIndicatorCovid(value: string): void {
@@ -116,22 +130,14 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
     this.blockId = Number(id);
   }
 
-  setBlockVisibility(el: any): BlockVisible {
+  setBlockVisibility(el: number): BlockVisible {
     return {
       block__noVisible: el !== this.blockId && this.toggleBlock,
       block__visible: el == this.blockId,
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  params: IParams = {
-    country: this.country,
-    indicatorCovid: this.indicatorCovid,
-    isAbsolutPopulation: this.populationToggle,
-    isDataOneDay: this.dayToggle,
-  };
-
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.getAllDataCovid();
   }
 
@@ -223,7 +229,7 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     this.subscriptions = [];
   }

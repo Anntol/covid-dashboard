@@ -33,7 +33,7 @@ export class CountriesTableComponent implements OnChanges, AfterViewInit {
 
   @Input() Countries!: ICountrData[];
 
-  @Output() countrySelected: EventEmitter<string> = new EventEmitter();
+  @Output() countrySelected: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
@@ -57,7 +57,7 @@ export class CountriesTableComponent implements OnChanges, AfterViewInit {
     });
   }
 
-  onChange = (input: string) => {
+  onChange = (input: string): void => {
     this.searchCountry = input;
   };
 
@@ -67,11 +67,11 @@ export class CountriesTableComponent implements OnChanges, AfterViewInit {
     }
   };
 
-  onInputChange = (event: any) => {
+  onInputChange = (event: any): void => {
     this.keyboard.setInput(event.target.value);
   };
 
-  handleShift = () => {
+  handleShift = (): void => {
     const currentLayout = this.keyboard.options.layoutName;
     const shiftToggle = currentLayout === 'default' ? 'shift' : 'default';
 

@@ -1,9 +1,10 @@
+// amCharts 4 currently has partial support for TypeScript's strict mode
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable no-return-assign */
 import {
-  Component, Input, OnChanges, AfterViewInit, OnDestroy, SimpleChanges, Inject, NgZone, PLATFORM_ID
+ Component, Input, OnChanges, AfterViewInit, OnDestroy, SimpleChanges, Inject, NgZone, PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
@@ -39,13 +40,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.countryData) {
       if (changes.countryData) {
-        // console.log(this.countryData);
         this.ngAfterViewInit();
       }
     }
   }
 
-  browserOnly(f: () => void) {
+  browserOnly(f: () => void): void {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
@@ -53,7 +53,7 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
@@ -93,25 +93,22 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       polygonSeries.useGeodata = true;
 
       const polygonTemplate = polygonSeries.mapPolygons.template;
-      // polygonTemplate.tooltipText = '{name} {value}';
       polygonTemplate.fill = am4core.color('#8f606e');
       polygonTemplate.polygon.fillOpacity = 0.6;
-      // polygonTemplate.fill = mChart.colors.getIndex(0);
 
       const hs = polygonTemplate.states.create('hover');
       hs.properties.fill = mChart.colors.getIndex(0);
-      // hs.properties.fill = am4core.color('#367B25');
 
       const imageSeries = mChart.series.push(new am4maps.MapImageSeries());
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
       imageSeries.mapImages.template.propertyFields.latitude = 'lat';
       imageSeries.mapImages.template.tooltipText = '{name} [bold]{value}';
 
-      const circle = imageSeries.mapImages.template.createChild(am4core.Circle);
+      const circle: am4core.Circle = imageSeries.mapImages.template.createChild(am4core.Circle);
       circle.radius = 3;
       circle.propertyFields.fill = 'color';
 
-      const circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
+      const circle2: am4core.Circle = imageSeries.mapImages.template.createChild(am4core.Circle);
       circle2.radius = 3;
       circle2.propertyFields.fill = 'color';
 
@@ -124,12 +121,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
           1000,
           am4core.ease.circleOut,
         );
-        animation.events.on('animationended', function (event: any) {
-          animateBullet(event.target.object)
+        animation.events.on('animationended', (event: any) => {
+          animateBullet(event.target.object);
         });
       }
 
-      circle2.events.on('inited', function (event: any): void {
+      circle2.events.on('inited', (event: any): void => {
         animateBullet(event.target);
       });
 
@@ -154,7 +151,9 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
           color = String(colors['recovered' as Keys]);
         }
 
-        data.push({ name: country, value, lat, long, color });
+        data.push({
+          name: country, value, lat, long, color
+        });
       });
       imageSeries.data = data;
       polygonSeries.data = data;

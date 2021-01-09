@@ -8,13 +8,13 @@ export class SortPipe implements PipeTransform {
   transform(array: ICountrData[], args: string): ICountrData[] {
     if (array !== undefined) {
       array.sort((a: any, b: any) => {
-        if (a[args] < b[args]) {
-          return 1;
+        if ( a.value < b.value ){
+            return 1;
+        } else if ( a.value > b.value ) {
+            return -1;
+        } else {
+            return 0;
         }
-        if (a[args] > b[args]) {
-          return -1;
-        }
-        return 0;
       });
     }
     return array;

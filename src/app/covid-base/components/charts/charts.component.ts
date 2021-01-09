@@ -1,5 +1,5 @@
 import {
-  Component, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, Input, Inject, NgZone, PLATFORM_ID
+  Component, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, Input, Inject, NgZone, PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -38,7 +38,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  browserOnly(f: () => void) {
+  browserOnly(f: () => void): void {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
@@ -104,7 +104,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.browserOnly(() => {
       if (this.chart) {
         this.isLoading = false;

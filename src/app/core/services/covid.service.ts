@@ -1,4 +1,3 @@
-/* eslint-disable no-return-assign */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -36,10 +35,22 @@ export class CovidService {
 
   public getAllDataCovidApi(): Observable<any> {
     const joined$ = forkJoin(
-      this.http.get<IGlobal>(`${COVID_URL.SUMMARY}`).pipe(tap((response) => (this.Global = response))),
-      this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`).pipe(tap((response) => (this.Countries = response))),
-      this.http.get<IHistorical[]>(`${COVID_URL.HISTORICAL}`).pipe(tap((response) => (this.Historical = response))),
-      this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`).pipe(tap((response) => (this.HistGlobal = response))),
+      this.http.get<IGlobal>(`${COVID_URL.SUMMARY}`)
+        .pipe(tap((response) => {
+          this.Global = response
+        })),
+      this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`)
+        .pipe(tap((response) => {
+          this.Countries = response
+        })),
+      this.http.get<IHistorical[]>(`${COVID_URL.HISTORICAL}`)
+        .pipe(tap((response) => {
+          this.Historical = response
+        })),
+      this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`)
+        .pipe(tap(response => {
+          this.HistGlobal = response
+        })),
     );
     return joined$;
   }
