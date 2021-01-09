@@ -10,8 +10,7 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-}
-  from '@angular/core';
+} from '@angular/core';
 
 import { SubscriptionLike } from 'rxjs';
 
@@ -45,6 +44,7 @@ interface BlockVisible {
   styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
   Countries!: ICountries[];
 
@@ -84,7 +84,18 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
 
   subscriptions: SubscriptionLike[] = [];
 
-  constructor(private covidService: CovidService, private cdr: ChangeDetectorRef, public storage: StorageService) {
+  params: IParams = {
+    country: this.country,
+    indicatorCovid: this.indicatorCovid,
+    isAbsolutPopulation: this.populationToggle,
+    isDataOneDay: this.dayToggle,
+  };
+
+  constructor(
+    private covidService: CovidService,
+    private cdr: ChangeDetectorRef,
+    public storage: StorageService,
+    ) {
     this.subscriptions.push(this.storage.global$.subscribe((data) => (this.Global = data)));
     this.subscriptions.push(this.storage.countries$.subscribe((data) => (this.Countries = data)));
     this.subscriptions.push(this.storage.historical$.subscribe((data) => (this.Historical = data)));
@@ -122,14 +133,6 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
       block__visible: el == this.blockId,
     };
   }
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  params: IParams = {
-    country: this.country,
-    indicatorCovid: this.indicatorCovid,
-    isAbsolutPopulation: this.populationToggle,
-    isDataOneDay: this.dayToggle,
-  };
 
   public ngOnInit(): void {
     this.getAllDataCovid();
@@ -219,6 +222,7 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
       this.title = `Total${` ${params.indicatorCovid}`.toUpperCase()}`;
       const keyValue = `${params.indicatorCovid}`;
       this.value = this.Global[keyValue as Keys];
+
     }
     this.cdr.detectChanges();
   }

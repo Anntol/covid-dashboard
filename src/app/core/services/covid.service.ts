@@ -43,4 +43,5 @@ export class CovidService {
     );
     return joined$;
   }
+
 }

@@ -104,7 +104,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.browserOnly(() => {
       if (this.chart) {
         this.isLoading = false;

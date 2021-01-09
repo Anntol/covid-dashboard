@@ -39,13 +39,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.countryData) {
       if (changes.countryData) {
-        // console.log(this.countryData);
         this.ngAfterViewInit();
       }
     }
   }
 
-  browserOnly(f: () => void) {
+  browserOnly(f: () => void): void {
     if (isPlatformBrowser(this.platformId)) {
       this.zone.runOutsideAngular(() => {
         f();
@@ -53,7 +52,7 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_dark);
       am4core.useTheme(am4themes_animated);
@@ -93,14 +92,11 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       polygonSeries.useGeodata = true;
 
       const polygonTemplate = polygonSeries.mapPolygons.template;
-      // polygonTemplate.tooltipText = '{name} {value}';
       polygonTemplate.fill = am4core.color('#8f606e');
       polygonTemplate.polygon.fillOpacity = 0.6;
-      // polygonTemplate.fill = mChart.colors.getIndex(0);
 
       const hs = polygonTemplate.states.create('hover');
       hs.properties.fill = mChart.colors.getIndex(0);
-      // hs.properties.fill = am4core.color('#367B25');
 
       const imageSeries = mChart.series.push(new am4maps.MapImageSeries());
       imageSeries.mapImages.template.propertyFields.longitude = 'long';
