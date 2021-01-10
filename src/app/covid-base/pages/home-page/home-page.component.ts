@@ -1,7 +1,3 @@
-// I don't know how to avoid these warnings
-/* eslint-disable eqeqeq */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import {
   Component,
   Input,
@@ -126,14 +122,13 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.toggleBlock = !this.toggleBlock;
-    const { id } = target.parentElement as HTMLElement;
-    this.blockId = Number(id);
+    this.blockId = Number(target.parentElement.id);
   }
 
   setBlockVisibility(el: number): BlockVisible {
     return {
       block__noVisible: el !== this.blockId && this.toggleBlock,
-      block__visible: el == this.blockId,
+      block__visible: el === this.blockId,
     };
   }
 
@@ -151,11 +146,12 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getAllDataCovid(): void {
-    this.covidService.getAllDataCovidApi().subscribe((data) => {
+    this.covidService.getAllDataCovidApi().subscribe(
+      (data: [IGlobal, ICountries[], IHistorical[], ITimeLineGlobal]) => {
       [this.Global, this.Countries, this.Historical, this.HistGlobal] = data;
       this.Historical.push({
         updated: this.Global.updated,
-        country: 'all World',
+        country: 'all',
         province: '',
         timeline: this.HistGlobal,
       });
@@ -165,7 +161,8 @@ export class HomePageComponent implements OnInit, OnChanges, OnDestroy {
       this.getDataCountries(this.params);
       this.getDataCharts(this.params);
       this.getDataGlobal(this.params);
-    });
+    }
+    );
   }
 
   public getDataCountries(params: IParams): void {
