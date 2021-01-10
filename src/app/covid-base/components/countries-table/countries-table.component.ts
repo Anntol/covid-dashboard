@@ -3,7 +3,6 @@ import {
   Input,
   ViewChild,
   OnChanges,
-  SimpleChanges,
   EventEmitter,
   Output,
   AfterViewInit,
@@ -33,19 +32,19 @@ export class CountriesTableComponent implements OnChanges, AfterViewInit {
 
   @Input() Countries!: ICountrData[];
 
-  @Output() countrySelected: EventEmitter<any> = new EventEmitter();
+  @Output() countrySelected = new EventEmitter<string>();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  toggleKeyboard(): any {
+  toggleKeyboard(): void {
     this.isShown = !this.isShown;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.dataSource = new MatTableDataSource(this.Countries);
   }
 
-  selectCountry(country: string): any {
+  selectCountry(country: string): void {
     this.countrySelected.emit(country);
   }
 
@@ -61,14 +60,15 @@ export class CountriesTableComponent implements OnChanges, AfterViewInit {
     this.searchCountry = input;
   };
 
-  onKeyPress = (button: string) => {
+  onKeyPress = (button: string): void => {
     if (button === '{shift}' || button === '{lock}') {
       this.handleShift();
     }
   };
 
-  onInputChange = (event: any): void => {
-    this.keyboard.setInput(event.target.value);
+  onInputChange = (event: Event): void => {
+    const input = event.target as HTMLInputElement;
+    this.keyboard.setInput(input.value);
   };
 
   handleShift = (): void => {
