@@ -5,17 +5,16 @@ import { ICountrData } from '../../../core/models/covid-base.models';
   name: 'sortPipe',
 })
 export class SortPipe implements PipeTransform {
-  transform(array: ICountrData[], args: string): ICountrData[] {
+  transform(array: ICountrData[]): ICountrData[] {
     if (array !== undefined) {
-      array.sort((a: any, b: any) => {
-
-        if ( a.value < b.value ){
-            return 1;
-        } else if ( a.value > b.value ) {
-            return -1;
-        } else {
-            return 0;
+      array.sort((a: ICountrData, b: ICountrData) => {
+        if (a.value < b.value) {
+          return 1;
         }
+        if (a.value > b.value) {
+          return -1;
+        }
+        return 0;
       });
     }
     return array;
