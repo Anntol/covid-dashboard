@@ -15,13 +15,11 @@ export class TableBlockComponent implements OnChanges {
 
   dataColumns: string[] = ['cases', 'deaths', 'recovered'];
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  dataSource: MatTableDataSource<ITransposedData> = new MatTableDataSource();
 
   displayColumns: string[] = [];
 
-  displayData: any[] = [];
-
-  inputData: any[] = [];
+  inputData: ITableElement[] = [];
 
   title = '';
 
@@ -64,13 +62,13 @@ export class TableBlockComponent implements OnChanges {
 
   // idea from https://stackblitz.com/edit/angular-cjskob?file=src%2Fapp%2Ftable.component.ts
   transpose(): void {
-    const transposedData: any[] = [];
+    const transposedData: ITransposedData[] = [];
     for (let column = 0; column < this.dataColumns.length; column += 1) {
       transposedData[column] = {
         label: this.labels[column],
       };
       for (let row = 0; row < this.inputData.length; row += 1) {
-        transposedData[column][`column${row}`] = this.inputData[row][this.dataColumns[column]];
+        transposedData[column][`column${row}`] = this.inputData[row][this.dataColumns[column]] as number;
       }
     }
     this.dataSource = new MatTableDataSource(transposedData);
@@ -104,4 +102,8 @@ export interface ITableElement {
   cases: number;
   deaths: number;
   recovered: number;
+}
+
+export interface ITransposedData {
+  [columnKey: string]: number | string
 }

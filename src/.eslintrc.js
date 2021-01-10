@@ -30,6 +30,7 @@ module.exports = {
         "import/prefer-default-export": "off",
         "class-methods-use-this": "off",
         "lines-between-class-members": "off",
+        "linebreak-style": [2, "windows"],
         "no-return-assign": "error",
         "no-shadow" : "off" ,
         "max-len": [
