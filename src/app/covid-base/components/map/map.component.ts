@@ -1,8 +1,3 @@
-// amCharts 4 currently has partial support for TypeScript's strict mode
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable no-return-assign */
 import {
  Component, Input, OnChanges, AfterViewInit, OnDestroy, SimpleChanges, Inject, NgZone, PLATFORM_ID
 } from '@angular/core';
@@ -112,8 +107,8 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
       circle2.radius = 3;
       circle2.propertyFields.fill = 'color';
 
-      function animateBullet(circle: am4core.Circle): void {
-        const animation: am4core.Animation = circle.animate(
+      function animateBullet(animatedCircle: am4core.Circle): void {
+        const animation: am4core.Animation = animatedCircle.animate(
           [
             { property: 'scale', from: 1, to: 3 },
             { property: 'opacity', from: 1, to: 0 },
@@ -121,12 +116,12 @@ export class MapComponent implements OnChanges, AfterViewInit, OnDestroy {
           1000,
           am4core.ease.circleOut,
         );
-        animation.events.on('animationended', (event: any) => {
-          animateBullet(event.target.object);
+        animation.events.on('animationended', (event): void => {
+          animateBullet(event.target.object as am4core.Circle);
         });
       }
 
-      circle2.events.on('inited', (event: any): void => {
+      circle2.events.on('inited', (event): void => {
         animateBullet(event.target);
       });
 
