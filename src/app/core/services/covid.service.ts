@@ -33,7 +33,7 @@ export class CovidService {
 
   constructor(private http: HttpClient) {}
 
-  public getAllDataCovidApi(): Observable<any> {
+  public getAllDataCovidApi(): Observable<[IGlobal, ICountries[], IHistorical[], ITimeLineGlobal]> {
     const joined$ = forkJoin(
       this.http.get<IGlobal>(`${COVID_URL.SUMMARY}`)
         .pipe(tap((response) => {
@@ -48,11 +48,10 @@ export class CovidService {
           this.Historical = response
         })),
       this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`)
-        .pipe(tap(response => {
+        .pipe(tap((response) => {
           this.HistGlobal = response
         })),
     );
     return joined$;
   }
-
 }

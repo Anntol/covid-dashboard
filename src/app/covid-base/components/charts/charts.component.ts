@@ -52,7 +52,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
       const chart = am4core.create('chartdiv', am4charts.XYChart);
       chart.paddingRight = 20;
 
-      const data: any[] = [];
+      const data: {date: Date; value: number}[] = [];
       if (this.isLoading) {
         const temp = Object.keys(this.historicalData.value);
         temp.forEach((keyValue) => {
