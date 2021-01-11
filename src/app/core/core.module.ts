@@ -6,9 +6,10 @@ import { CovidService } from './services/covid.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { DialogLikeComponent, DialogLikeContentComponent } from './components/dialog-like/dialog-like.component';
-
-import { DialogInfoComponent, DialogInfoContentComponent } from './components/dialog-info/dialog-info.component';
+import { DialogLikeComponent } from './components/dialog-like/dialog-like.component';
+import { DialogLikeContentComponent } from './components/dialog-like/dialog-like-content.component';
+import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
+import { DialogInfoContentComponent } from './components/dialog-info/dialog-info-content.component';
 
 @NgModule({
   declarations: [
