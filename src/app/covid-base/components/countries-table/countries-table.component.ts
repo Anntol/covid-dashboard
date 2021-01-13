@@ -2,13 +2,11 @@ import {
   Component,
   Input,
   ViewChild,
-  OnInit,
   OnChanges,
-  SimpleChanges,
   EventEmitter,
   Output,
   AfterViewInit,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,67 +17,66 @@ import Keyboard from 'simple-keyboard';
   selector: 'app-countries-table',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './countries-table.component.html',
-  styleUrls: [
-    './countries-table.component.scss',
-    '/node_modules/simple-keyboard/build/css/index.css'
-  ]
+  styleUrls: ['./countries-table.component.scss', '/node_modules/simple-keyboard/build/css/index.css'],
 })
-export class CountriesTableComponent implements OnInit, OnChanges, AfterViewInit{
-
+export class CountriesTableComponent implements OnChanges, AfterViewInit {
   displayedColumns = ['cases', 'flag', 'country'];
+
   dataSource!: MatTableDataSource<ICountrData>;
+
   searchCountry = '';
+
   keyboard!: Keyboard;
+
   isShown = false;
 
   @Input() Countries!: ICountrData[];
-  @Output() countrySelected: EventEmitter<string> = new EventEmitter();
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
-  constructor() {}
+  @Output() countrySelected = new EventEmitter<string>();
 
-  toggleKeyboard(): any{
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
+  toggleKeyboard(): void {
     this.isShown = !this.isShown;
   }
 
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.dataSource = new MatTableDataSource(this.Countries);
   }
 
-  selectCountry(country: string): any {
+  selectCountry(country: string): void {
     this.countrySelected.emit(country);
   }
 
   ngAfterViewInit(): void {
     this.keyboard = new Keyboard({
-      onChange: input => this.onChange(input),
-      onKeyPress: button => this.onKeyPress(button),
-      theme: 'hg-theme-default myTheme1'
+      onChange: (input) => this.onChange(input),
+      onKeyPress: (button) => this.onKeyPress(button),
+      theme: 'hg-theme-default myTheme1',
     });
   }
 
-  onChange = (input: string) => {
+  onChange = (input: string): void => {
     this.searchCountry = input;
-  }
+  };
 
-  onKeyPress = (button: string) => {
-    if (button === '{shift}' || button === '{lock}') { this.handleShift(); }
-  }
+  onKeyPress = (button: string): void => {
+    if (button === '{shift}' || button === '{lock}') {
+      this.handleShift();
+    }
+  };
 
-  onInputChange = (event: any) => {
-    this.keyboard.setInput(event.target.value);
-  }
+  onInputChange = (event: Event): void => {
+    const input = event.target as HTMLInputElement;
+    this.keyboard.setInput(input.value);
+  };
 
-  handleShift = () => {
+  handleShift = (): void => {
     const currentLayout = this.keyboard.options.layoutName;
     const shiftToggle = currentLayout === 'default' ? 'shift' : 'default';
 
     this.keyboard.setOptions({
-      layoutName: shiftToggle
+      layoutName: shiftToggle,
     });
-  }
-
+  };
 }
-

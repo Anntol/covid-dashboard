@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { ICountries, IGlobal, IHistorical, ITimeLineGlobal } from '../models/covid-base.models';
+import { Observable, forkJoin } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import {
+  ICountries, IGlobal, IHistorical, ITimeLineGlobal
+} from '../models/covid-base.models';
 import { BASE_URL } from '../../shared/constants/constants';
 
 const COVID_URL = {
@@ -14,40 +16,42 @@ const COVID_URL = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CovidService {
   Global!: IGlobal;
+
   Countries!: ICountries[];
+
   Historical!: IHistorical[];
+
   HistGlobal!: ITimeLineGlobal;
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
   constructor(private http: HttpClient) {}
 
-    public getAllDataCovidApi(): Observable<any> {
-      const joined$ = forkJoin([
-        this.http.get<IGlobal>(`${COVID_URL. SUMMARY}`).pipe(
-          tap(response =>  this.Global = response)
-        ),
-        this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`).pipe(
-          tap(response =>  this.Countries = response)
-        ),
-        this.http.get<IHistorical[]>(`${COVID_URL.HISTORICAL}`).pipe(
-          tap(response => this.Historical = response)
-        ),
-        this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`).pipe(
-          tap(response => this.HistGlobal = response)
-        ),
-        /* TODO error catching
-           catchError((err: HttpErrorResponse) => {
-           console.error(err.status, err.message);
-           return of(joined$);
-         }) */
-        ]);
-      return joined$;
-    }
+  public getAllDataCovidApi(): Observable<[IGlobal, ICountries[], IHistorical[], ITimeLineGlobal]> {
+    const joined$ = forkJoin(
+      this.http.get<IGlobal>(`${COVID_URL.SUMMARY}`)
+        .pipe(tap((response) => {
+          this.Global = response
+        })),
+      this.http.get<ICountries[]>(`${COVID_URL.COUNTRIES}`)
+        .pipe(tap((response) => {
+          this.Countries = response
+        })),
+      this.http.get<IHistorical[]>(`${COVID_URL.HISTORICAL}`)
+        .pipe(tap((response) => {
+          this.Historical = response
+        })),
+      this.http.get<ITimeLineGlobal>(`${COVID_URL.HISTGLOBAL}`)
+        .pipe(tap((response) => {
+          this.HistGlobal = response
+        })),
+    );
+    return joined$;
+  }
 }

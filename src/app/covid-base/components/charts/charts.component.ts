@@ -1,13 +1,6 @@
 import {
-  Component,
-  OnChanges,
-  SimpleChanges,
-  AfterViewInit,
-  OnDestroy,
-  Input,
-  Inject,
-  NgZone,
-  PLATFORM_ID } from '@angular/core';
+  Component, OnChanges, SimpleChanges, AfterViewInit, OnDestroy, Input, Inject, NgZone, PLATFORM_ID,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as am4core from '@amcharts/amcharts4/core';
@@ -19,26 +12,27 @@ import { IHistData } from '../../../core/models/covid-base.models';
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.scss']
+  styleUrls: ['./charts.component.scss'],
 })
-
 export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
   selected = 'cases';
-  country = 'all';
+
+  country = 'all World';
+
   isLoading = false;
 
   @Input() historicalData!: IHistData;
 
   private chart!: am4charts.XYChart;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: string, private zone: NgZone) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.historicalData) {
-      if (changes[`historicalData`]) {
+      if (changes.historicalData) {
         this.isLoading = true;
         this.selected = this.historicalData.valueName;
-        this.country = this.historicalData ? `${this.historicalData.country}` : 'ALL';
+        this.country = this.historicalData ? `${this.historicalData.country}` : 'all World';
         this.ngAfterViewInit();
       }
     }
@@ -58,10 +52,10 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
       const chart = am4core.create('chartdiv', am4charts.XYChart);
       chart.paddingRight = 20;
 
-      const data: any[] = [];
-      if (this.isLoading){
+      const data: {date: Date; value: number}[] = [];
+      if (this.isLoading) {
         const temp = Object.keys(this.historicalData.value);
-        temp.forEach(keyValue => {
+        temp.forEach((keyValue) => {
           const day = keyValue.split('/');
           const dayDate = new Date(Number(day[2]), Number(day[0]) - 1, Number(day[1]));
           const valueDate = this.historicalData.value[keyValue];
@@ -83,7 +77,7 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
       series.dataFields.valueY = 'value';
       series.tooltipText = '{valueY.value}';
 
-      if (this.historicalData){
+      if (this.historicalData) {
         const { valueName } = this.historicalData;
         if (valueName === 'cases') {
           series.tooltipText = 'Cases: [bold]{valueY}[/]';
@@ -118,6 +112,4 @@ export class ChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
       }
     });
   }
-
-
 }

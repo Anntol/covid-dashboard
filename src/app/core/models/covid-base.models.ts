@@ -8,7 +8,6 @@ export interface IGlobal {
   todayCases: number;
   todayDeaths: number;
   todayRecovered: number;
-  value: number;
 }
 
 export interface ICountries {
@@ -69,5 +68,3 @@ export interface IHistData {
 export interface IDayData {
   [propName: string]: number;
 }
-
-
