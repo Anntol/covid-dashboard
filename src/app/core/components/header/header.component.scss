@@ -1,0 +1,26 @@
+.header{
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 .5px 5px black;
+  z-index: 1000;
+}
+.spacer {
+  flex: 1 1 auto;
+} 
+
+.btn-icon:hover{
+  scale: 1.5; 
+}
+
+.logo{
+  width: 25%;
+  @media screen and (max-width: 650px) {
+    display: none;
+  }
+}

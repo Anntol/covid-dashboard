@@ -1,0 +1,15 @@
+<div class="container">
+    <button mat-button class="charts-buttons" [style.width.px]="120">{{ country }}</button>
+    <div class="charts-select"
+      [style.width.px]="90"
+      [style.height.px]="30"
+      [style.right.px]="10">
+      <mat-select [(value)]="selected">
+        <mat-option matNativeControl value="cases">Cases</mat-option>
+        <mat-option matNativeControl value="deaths">Deaths</mat-option>
+        <mat-option matNativeControl value="recovered">Recovered</mat-option>
+      </mat-select>
+    </div>
+  <div id="chartdiv" style="width: 85%; height: 95%"></div>
+</div>
+

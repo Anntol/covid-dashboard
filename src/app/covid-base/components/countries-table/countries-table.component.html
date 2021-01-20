@@ -1,0 +1,35 @@
+<mat-form-field>
+  <mat-label>
+    <mat-icon class="icon-search">search</mat-icon>
+    Search...
+  </mat-label>
+  <input matInput (input)="onInputChange($event)" value={{searchCountry}} [(ngModel)]="searchCountry">
+  <mat-icon class="icon-keyboard" (click)="toggleKeyboard()">keyboard</mat-icon>
+</mat-form-field>
+
+<div>
+  <div class="simple-keyboard" [style.bottom]="isShown ? '5rem' : '-100%' "></div>
+</div>
+
+<div class="container mat-elevation-z8">
+  <div class="table-container">
+    <table  mat-table
+            [dataSource]="Countries | searchCountryPipe:searchCountry | sortPipe "
+            class="table">
+      <ng-container matColumnDef="cases">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="col-data" mat-cell *matCellDef="let el"> {{ el.value | number }} </td>
+      </ng-container>
+      <ng-container matColumnDef="flag">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="col-flag" mat-cell *matCellDef="let el"><img [src]="el.countryInfo.flag"></td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="col-country" mat-cell *matCellDef="let el" (click)="selectCountry(el.country)"> {{ el.country }} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

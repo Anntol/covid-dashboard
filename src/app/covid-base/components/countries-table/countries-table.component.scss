@@ -1,0 +1,162 @@
+.container {
+  position: relative;
+  height: calc(70vh - 240px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.table-container {
+  position: relative;
+}
+
+table {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+table,
+.mat-form-field {
+  width: 100%;
+  @media screen and (max-width: 959px) {
+    width: 50%;
+    position: relative;
+    left: 25%;
+  }
+}
+
+.mat-form-field {
+  font-size: .9rem;
+}
+
+tr.mat-header-row {
+  height: 2.2rem;
+}
+
+.col-data {
+  font-size: 1rem;
+  color: red;
+  font-weight: 700;
+}
+
+.col-country:hover {
+  cursor: pointer;
+}
+
+.mat-header-cell {
+  position: sticky;
+  top: 0;
+  background: #424242;
+  z-index: 100;
+}
+
+img {
+  width: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 1rem;
+}
+
+/*
+  Scrollbar
+*/
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkred; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: red; 
+}
+
+.mat-header-row {
+  display: none;
+}
+
+/*
+  Input and Virtual keyboard
+*/
+
+.icon-search {
+  margin-right: .5rem;
+}
+
+.mat-icon.icon-keyboard,
+.mat-icon.icon-search {
+  font-size: 1rem;
+  z-index: 50;
+}
+
+.mat-icon.icon-keyboard {
+  position: absolute;
+  right: 0;
+}
+
+.mat-icon.icon-keyboard:hover {
+  cursor: pointer;
+} 
+
+.mat-form-field {
+  width: 50%;
+  position: relative;
+  left: 25%;
+}
+
+.mat-form-field-appearance-legacy, 
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+input {
+  height: 1rem;
+}
+
+ul {
+  text-align: center;
+}
+
+.simple-keyboard {
+  position: fixed;
+  display: block;
+  left: 10%;
+  padding: 10px;
+  max-width: 80%;
+  z-index: 100;
+}
+
+.simple-keyboard.myTheme1 {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.simple-keyboard.myTheme1 .hg-button {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.simple-keyboard.myTheme1 .hg-button:active {
+  background:red;
+  color: white;
+}
+
+#root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+  background: red;
+}

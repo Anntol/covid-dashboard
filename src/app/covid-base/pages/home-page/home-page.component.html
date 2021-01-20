@@ -1,0 +1,60 @@
+<div class="wrapper">
+  <!-- style="width: calc(100vw - 40px); height: calc(100vh - 155px)" -->
+  <div class="container" (click)="openFullScreen($event)">
+  <div id="1" class="item"
+      [ngClass] = "setBlockVisibility(1)"
+      style="height: 80px">
+    <div class="center-blok">
+      <p style="text-align: center; margin-top: 7px">{{ title }}</p>
+      <p style=" color: red; font-size: 28px; text-align: center">{{ value | number }}</p>
+    </div>
+    <span class="material-icons full">zoom_out_map</span>
+  </div>
+  <div id="2" class="item"
+      [ngClass] = "setBlockVisibility(2)"
+     style="height: calc(70vh - 165px)">
+    <app-map [countryData]='this.countriesData'></app-map>
+    <span class="material-icons full">zoom_out_map</span>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" #group="matButtonToggleGroup">
+      <mat-button-toggle value="cases" (click) = "setIndicatorCovid(group.value)">
+        <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
+          fiber_manual_record
+        </mat-icon>{{ links[0] }}
+      </mat-button-toggle>
+      <mat-button-toggle value="deaths" (click) = "setIndicatorCovid(group.value)">
+        <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
+          fiber_manual_record
+        </mat-icon>{{ links[1] }}
+      </mat-button-toggle>
+      <mat-button-toggle value="recovered" (click) = "setIndicatorCovid(group.value)">
+        <mat-icon aria-hidden="false" aria-label="fiber_manual_record" style="margin-right: 5px">
+          fiber_manual_record
+        </mat-icon>{{ links[2] }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div id="3" class="item"
+      [ngClass] = "setBlockVisibility(3)"
+      style="height: calc(70vh - 165px)">
+    <span class="material-icons full">zoom_out_map</span>
+    <app-countries-table [Countries]='this.countriesData' (countrySelected)="setCountry($event)"></app-countries-table>
+  </div>
+
+  <div id="4" class="item"
+      [ngClass] = "setBlockVisibility(4)"
+      style="height:  calc(70vh - 253px)">
+    <span class="material-icons full">zoom_out_map</span>
+    <app-table-block
+      [globalData]="this.globalData"
+      [(dayToggle)]="this.dayToggle"
+      [(populationToggle)]="this.populationToggle">
+    </app-table-block>
+  </div>
+  </div>
+    <div id="5" class="item charts"
+      [ngClass] = "setBlockVisibility(5)"
+      style="width: calc(100vw - 55px); height: 29vh">
+      <app-charts [historicalData]='this.historicalData'></app-charts>
+    <span class="material-icons full">zoom_out_map</span>
+  </div>
+</div>

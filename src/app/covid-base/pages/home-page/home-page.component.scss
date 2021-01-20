@@ -1,0 +1,130 @@
+$items-bg-color: rgba(51, 56, 51, 0.822);
+$base-bg-color: rgba(51, 56, 51, 0.705);
+$items-shadow: rgba(0, 90, 250, 0.05);
+$base-color:rgb(255, 255, 255);
+$base-primary:  rgb(197, 17, 98);
+
+.wrapper {
+  background-color: $base-bg-color;
+  padding: 15px 15px 13px 15px;
+}
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-around;
+  height: calc(70vh - 156px);
+  width: calc(100vw - 51px);
+  margin: 0 auto;
+  counter-reset: items;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 51px);
+    height: max-content;
+  }
+}
+
+.item {
+  position: relative;
+  margin-bottom: 7px;
+  border-radius: 10px;
+  background-color: $items-bg-color;
+  border: 1px solid $base-primary;
+  box-shadow: 0 2px 2px $items-shadow,
+    0 4px 4px $items-shadow,
+    0 8px 8px $items-shadow,
+    0 16px 16px $items-shadow;
+  color: $base-color;
+  padding: 5px 5px 0 5px;
+  box-sizing: border-box;
+}
+
+.item:nth-child(3n+1) {
+  order: 1;
+  width: 30%;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 40px);
+  }
+}
+.item:nth-child(2) {
+  order: 2;
+  width: 40%;
+   @media screen and (max-width: 959px) {
+    width: calc(100vw - 40px);
+  }
+}
+.item:nth-child(3)   {
+  order: 3;
+  width: 27%;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 40px);
+  }
+}
+.charts {
+  width: 95%;
+  margin: 0 auto;
+  @media screen and (max-width: 959px) {
+    width: calc(100vw - 40px);
+  }
+}
+
+.container::before,
+.container::after {
+  content: "";
+  flex-basis: 90%;
+  width: 0;
+  order: 2;
+}
+
+.center-block {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.full{
+  color: $items-bg-color;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.full:hover {
+  color: $base-primary;
+  cursor: pointer;
+}
+
+.block__noVisible {
+  display: none;
+}
+
+.block__visible {
+  display: block;
+}
+
+.in-full {
+  width: calc(100vw - 20px);
+  height: calc(100vh - 90px);
+}
+
+
+mat-button-toggle-group {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+mat-button-toggle {
+  font-size: 14px;
+
+  &.text__red {
+    color: #f74e10;
+  }
+
+  &.text__blue {
+    color: #0794be;
+  }
+
+  &.text__green {
+    color: #20b120;
+  }
+}

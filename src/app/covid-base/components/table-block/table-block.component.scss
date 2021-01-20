@@ -1,0 +1,24 @@
+tr.mat-row {
+    height: 20px;
+}
+
+td.mat-cell {
+    width: 10em;    
+    padding: 0.35em 0;
+}
+
+td.mat-cell:nth-child(1) {
+    font-weight: bold;
+}
+
+.mat-slide-toggle {
+    padding: 0.35em;
+}
+
+.title {
+    padding-right: 26px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+  
