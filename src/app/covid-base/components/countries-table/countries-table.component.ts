@@ -12,12 +12,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ICountrData } from 'src/app/core/models/covid-base.models';
 import Keyboard from 'simple-keyboard';
+import 'simple-keyboard/build/css/index.css'
 
 @Component({
   selector: 'app-countries-table',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './countries-table.component.html',
-  styleUrls: ['./countries-table.component.scss', '/node_modules/simple-keyboard/build/css/index.css'],
+  styleUrls: ['./countries-table.component.scss'],
 })
 export class CountriesTableComponent implements OnChanges, AfterViewInit {
   displayedColumns = ['cases', 'flag', 'country'];
